@@ -79,12 +79,18 @@
         document.getElementById('searchForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const studentID = document.getElementById('studentID').value.trim();
+            console.log('Entered Student ID:', studentID);
 
-            const encodedURL = 'aHR0cHM6Ly9yYXcuZ2l0aHViLmNvbS9CSG9zdHMvZmFpbmFsYi9tYWluL3N0dWRlbnRzLmNzdg==';
-            const decodedURL = atob(encodedURL);
+            const part1 = 'https://raw.githubusercontent.com/';
+            const part2 = 'BHosts/';
+            const part3 = 'fainalb/';
+            const part4 = 'main/';
+            const fileName = 'students.csv';
+
+            const fullURL = part1 + part2 + part3 + part4 + fileName;
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', decodedURL, true);
+            xhr.open('GET', fullURL, true);
             xhr.responseType = 'blob';
 
             xhr.onload = function() {
@@ -92,18 +98,22 @@
                 Papa.parse(blob, {
                     complete: function(results) {
                         const students = results.data.slice(1);
+                        console.log('Parsed students:', students);
+
                         localStorage.setItem('allStudents', JSON.stringify(students));
                         localStorage.setItem('studentID', studentID);
 
                         window.location.href = 'student.html';
                     },
                     error: function(error) {
+                        console.error('Error parsing CSV:', error);
                         alert('An error occurred while reading the file.');
                     }
                 });
             };
 
             xhr.onerror = function() {
+                console.error('Error fetching the CSV file.');
                 alert('Failed to fetch the student data.');
             };
 
