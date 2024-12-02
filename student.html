@@ -107,8 +107,11 @@
     <script>
         const allStudents = JSON.parse(localStorage.getItem('allStudents'));
         const studentID = localStorage.getItem('studentID');
+
         if (allStudents && studentID) {
-            const studentRecords = allStudents.filter(record => record[0] === studentID);
+            // تأكد من إزالة الفراغات قبل المقارنة
+            const studentRecords = allStudents.filter(record => record[0].trim() === studentID.trim());
+
             if (studentRecords.length > 0) {
                 const studentName = studentRecords[0][1];
                 const studentNumber = studentRecords[0][0];
@@ -157,6 +160,7 @@
                 window.location.href = 'index.html';
             });
         }
+
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
