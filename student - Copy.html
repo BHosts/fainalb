@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+   <style>
+    body {
+        font-family: 'Amiri', serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+        background-color: #f0f0f0;
+        margin: 0;
+        flex-direction: column;
+        direction: ltr; /* اتجاه النصوص من اليسار إلى اليمين */
+    }
+    h1 {
+        color: #4a90e2;
+        text-align: center;
+        position: relative;
+    }
+    h1::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 2px;
+        background-color: #d36d36;
+        margin: 2px auto 2px;
+    }
+    .table-container {
+        background-color: #fff;
+        padding: 1px;
+        border-radius: 4px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        width: 100%;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left; /* محاذاة النصوص إلى اليسار */
+    }
+    th {
+        background-color: #f4f4f4;
+        font-weight: bold;
+    }
+    .buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+    button {
+        background-color: #4a90e2;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 17px;
+    }
+    button:hover {
+        background-color: #357abd;
+    }
+</style>
+
+</head>
+<body>
+    <h1>Student Information</h1>
+    <div class="table-container" id="tableContainer">
+        <table>
+            <tr>
+                <th>studid</th>
+                <td id="student1"></td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td id="student2"></td>
+            </tr>
+            <tr>
+                <th>COURSE</th>
+                <td id="student3"></td>
+            </tr>
+            <tr>
+                <th>eDay</th>
+                <td id="student4"></td>
+            </tr>
+            <tr>
+                <th>eDate</th>
+                <td id="student5"></td>
+            </tr>
+            <tr>
+                <th>eTime</th>
+                <td id="student6"></td>
+            </tr>
+            <tr>
+                <th>building</th>
+                <td id="student7"></td>
+            </tr>
+            <tr>
+                <th>room</th>
+                <td id="student8"></td>
+            </tr>
+            <tr>
+                <th>secId</th>
+                <td id="student9"></td>
+            </tr>
+            <tr>
+                <th>branch</th>
+                <td id="student10"></td>
+            </tr>
+            <tr>
+                <th>serInRoom</th>
+                <td id="student11"></td>
+            </tr>
+            <tr>
+                <th>TRACK</th>
+                <td id="student12"></td>
+            </tr>			
+        </table>
+    </div>
+    <div class="buttons">
+        <button onclick="window.location.href='index.html'">Back</button>
+        <button id="saveAsImage">Save as image</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const student = JSON.parse(localStorage.getItem('student'));
+            if (student && Array.isArray(student)) {
+                console.log('Stored student data:', student);
+                document.getElementById('student1').textContent = student[0];
+                document.getElementById('student2').textContent = student[1];
+                document.getElementById('student3').textContent = student[2];
+                document.getElementById('student4').textContent = student[3];
+                document.getElementById('student5').textContent = student[4];
+                document.getElementById('student6').textContent = student[5];
+                document.getElementById('student7').textContent = student[6];
+                document.getElementById('student8').textContent = student[7];
+                document.getElementById('student9').textContent = student[8];
+                document.getElementById('student10').textContent = student[9];
+                document.getElementById('student11').textContent = student[10];
+                document.getElementById('student12').textContent = student[11];				
+            } else {
+                console.error('Student data not found or incorrect data.');
+                alert('Student data not found or the data is incorrect.');
+            }
+        });
+
+        document.getElementById('saveAsImage').addEventListener('click', function() {
+            html2canvas(document.getElementById('tableContainer')).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'student_data.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        });
+    </script>
+</body>
+</html>
