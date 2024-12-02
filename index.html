@@ -69,7 +69,6 @@
         <h1>Student Search</h1>
         <form id="searchForm">
             <label for="studentID">Enter your ID</label>
-            <!-- تغيير النوع إلى password -->
             <input type="password" id="studentID" required>
             <button type="submit">Search</button>
         </form>
@@ -90,13 +89,13 @@
                 const blob = xhr.response;
                 Papa.parse(blob, {
                     complete: function(results) {
-                        const students = results.data.slice(1); // إزالة عناوين الأعمدة
+                        const students = results.data.slice(1);
                         console.log('Parsed students:', students);
 
-                        localStorage.setItem('allStudents', JSON.stringify(students)); // تخزين جميع البيانات
-                        localStorage.setItem('studentID', studentID); // تخزين الرقم الجامعي
+                        localStorage.setItem('allStudents', JSON.stringify(students));
+                        localStorage.setItem('studentID', studentID);
 
-                        window.location.href = 'student.html'; // التوجه للصفحة التالية
+                        window.location.href = 'student.html';
                     },
                     error: function(error) {
                         console.error('Error parsing CSV:', error);
@@ -111,6 +110,10 @@
             };
 
             xhr.send();
+        });
+
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
         });
     </script>
 </body>
