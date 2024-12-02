@@ -10,7 +10,7 @@
             font-family: 'Amiri', serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+            background-color: #fff; /* تغيير الخلفية إلى الأبيض */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -70,13 +70,12 @@
     <div class="container">
         <h1>Student Details</h1>
         <div class="student-info" id="studentInfo">
-            <!-- سيتم تعبئة اسم الطالب ورقمه الجامعي هنا -->
+            <!-- سيتم عرض اسم الطالب ورقمه الجامعي هنا -->
         </div>
         <div style="width: 100%; overflow-x: auto;">
             <table>
                 <thead>
                     <tr>
-                      
                         <th>COURSE</th>
                         <th>eDay</th>
                         <th>eDate</th>
@@ -107,10 +106,12 @@
             console.log('Matched records:', studentRecords);
 
             if (studentRecords.length > 0) {
-                const studentName = studentRecords[0][1];
+                const studentName = studentRecords[0][1]; // اسم الطالب
+                const studentNumber = studentRecords[0][0]; // رقم الطالب الجامعي
                 const studentInfoDiv = document.getElementById('studentInfo');
                 studentInfoDiv.innerHTML = `
-                    <h2>Student Name: ${studentName}</h2>
+                    <h2>اسم الطالب: ${studentName}</h2>
+                    <h2>رقم الطالب الجامعي: ${studentNumber}</h2>
                 `;
 
                 const studentTable = document.getElementById('studentTable');
