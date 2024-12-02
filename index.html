@@ -76,7 +76,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
-        // دالة التشفير المتقدم
         function complexEncrypt(url, key) {
             let result = '';
             for (let i = 0; i < url.length; i++) {
@@ -86,7 +85,6 @@
             return btoa(result);
         }
 
-        // دالة فك التشفير
         function complexDecrypt(encodedUrl, key) {
             const decoded = atob(encodedUrl);
             let result = '';
@@ -97,22 +95,20 @@
             return result;
         }
 
-        // المفتاح السري (يفضل أن يكون معقد وطويل)
         const SECRET_KEY = 'X9b#mK2$pQ7zL4@fN1!';
 
-        // الرابط المشفر (سيبدو مختلفاً تماماً)
-        const ENCRYPTED_URL = complexEncrypt(
-            'https://raw.githubusercontent.com/BHosts/fainalb/main/students.csv', 
-            SECRET_KEY
-        );
+        const part1 = 'https://raw.githubusercontent.com/';
+        const part2 = 'BHosts/fainalb/main/';
+        const part3 = 'students'; // تخزين اسم الملف
+        const fileExtension = 'csv'; // سيتم إخفاؤه في هذه الحالة
+        const encryptedUrl = complexEncrypt(part1 + part2 + complexEncrypt(part3, SECRET_KEY) + complexEncrypt(fileExtension, SECRET_KEY), SECRET_KEY);
 
         document.getElementById('searchForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const studentID = document.getElementById('studentID').value.trim();
             console.log('Entered Student ID:', studentID);
 
-            // فك تشفير الرابط
-            const csvUrl = complexDecrypt(ENCRYPTED_URL, SECRET_KEY);
+            const csvUrl = complexDecrypt(encryptedUrl, SECRET_KEY);
             
             const xhr = new XMLHttpRequest();
             xhr.open('GET', csvUrl, true);
@@ -145,12 +141,10 @@
             xhr.send();
         });
 
-        // منع القائمة السياقية (Right-click)
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
 
-        // إخفاء مصدر الصفحة
         document.addEventListener('keydown', function(e) {
             if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
                 e.preventDefault();
