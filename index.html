@@ -69,6 +69,7 @@
         <h1>Student Search</h1>
         <form id="searchForm">
             <label for="studentID">Enter your ID</label>
+            <!-- تغيير النوع إلى password -->
             <input type="password" id="studentID" required>
             <button type="submit">Search</button>
         </form>
@@ -82,36 +83,30 @@
             console.log('Entered Student ID:', studentID);
 
             const xhr = new XMLHttpRequest();
-            // تغيير الرابط ليكون موجهًا إلى API الخاص بك
-            xhr.open('GET', 'http://localhost:3000/students', true);
-            xhr.responseType = 'text';
+            xhr.open('GET', 'https://raw.githubusercontent.com/BHosts/fainalb/main/students.csv', true);
+            xhr.responseType = 'blob';
 
             xhr.onload = function() {
-                if (xhr.status === 200) {
-                    const csvData = xhr.responseText;
-                    Papa.parse(csvData, {
-                        complete: function(results) {
-                            const students = results.data.slice(1); // إزالة عناوين الأعمدة
-                            console.log('Parsed students:', students);
+                const blob = xhr.response;
+                Papa.parse(blob, {
+                    complete: function(results) {
+                        const students = results.data.slice(1); // إزالة عناوين الأعمدة
+                        console.log('Parsed students:', students);
 
-                            localStorage.setItem('allStudents', JSON.stringify(students)); // تخزين جميع البيانات
-                            localStorage.setItem('studentID', studentID); // تخزين الرقم الجامعي
+                        localStorage.setItem('allStudents', JSON.stringify(students)); // تخزين جميع البيانات
+                        localStorage.setItem('studentID', studentID); // تخزين الرقم الجامعي
 
-                            window.location.href = 'student.html'; // التوجه للصفحة التالية
-                        },
-                        error: function(error) {
-                            console.error('Error parsing CSV:', error);
-                            alert('An error occurred while reading the file.');
-                        }
-                    });
-                } else {
-                    console.error('Error fetching data:', xhr.status);
-                    alert('Failed to fetch student data.');
-                }
+                        window.location.href = 'student.html'; // التوجه للصفحة التالية
+                    },
+                    error: function(error) {
+                        console.error('Error parsing CSV:', error);
+                        alert('An error occurred while reading the file.');
+                    }
+                });
             };
 
             xhr.onerror = function() {
-                console.error('Error fetching the student data.');
+                console.error('Error fetching the CSV file.');
                 alert('Failed to fetch the student data.');
             };
 
