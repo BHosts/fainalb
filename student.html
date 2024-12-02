@@ -11,15 +11,23 @@
             margin: 0;
             padding: 0;
             background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             text-align: center;
         }
         .container {
-            max-width: 90%;
-            margin: 20px auto;
+            width: 100%;
+            height: 100%;
             background-color: #fff;
             padding: 20px;
-            border-radius: 8px;
+            box-sizing: border-box;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
         }
         h1 {
             color: #4a90e2;
@@ -33,8 +41,10 @@
         }
         table {
             width: 100%;
+            max-width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            overflow-x: auto;
         }
         th, td {
             border: 1px solid #ddd;
@@ -48,6 +58,12 @@
         td {
             background-color: #f9f9f9;
         }
+        @media (max-width: 768px) {
+            th, td {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -56,26 +72,26 @@
         <div class="student-info" id="studentInfo">
             <!-- سيتم تعبئة اسم الطالب ورقمه الجامعي هنا -->
         </div>
-        <table>
-            <thead>
-                <tr>
-       
-                    <th>COURSE</th>
-                    <th>eDay</th>
-		    <th>eDate</th>
-		    <th>eTime</th>
-		    <th>building</th>
-		    <th>room</th>
-		    <th>secId</th>
-		    <th>branch</th>
-		    <th>serInRoom</th>
-		    <th>TRACK</th>
-			
-                </tr>
-            </thead>
-            <tbody id="studentTable">
-            </tbody>
-        </table>
+        <div style="width: 100%; overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>COURSE</th>
+                        <th>eDay</th>
+                        <th>eTime</th>
+                        <th>building</th>
+                        <th>room</th>
+                        <th>secId</th>
+                        <th>branch</th>
+                        <th>serInRoom</th>
+                        <th>TRACK</th>
+                    </tr>
+                </thead>
+                <tbody id="studentTable">
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
@@ -86,20 +102,16 @@
             console.log('All students:', allStudents);
             console.log('Searching for Student ID:', studentID);
 
-            // البحث عن جميع السجلات المطابقة للرقم الجامعي
             const studentRecords = allStudents.filter(record => record[0] === studentID);
             console.log('Matched records:', studentRecords);
 
-            // عرض معلومات الطالب الأساسية (الاسم والرقم الجامعي)
             if (studentRecords.length > 0) {
-                const studentName = studentRecords[0][1]; // اسم الطالب من أول سجل
+                const studentName = studentRecords[0][1];
                 const studentInfoDiv = document.getElementById('studentInfo');
                 studentInfoDiv.innerHTML = `
                     <h2>Student Name: ${studentName}</h2>
-                    <h2>Student ID: ${studentID}</h2>
                 `;
 
-                // عرض السجلات في الجدول
                 const studentTable = document.getElementById('studentTable');
                 studentRecords.forEach(record => {
                     const row = document.createElement('tr');
