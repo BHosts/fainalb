@@ -69,7 +69,6 @@
         <h1>Student Search</h1>
         <form id="searchForm">
             <label for="studentID">Enter your ID</label>
-            <!-- تغيير النوع إلى password -->
             <input type="password" id="studentID" required>
             <button type="submit">Search</button>
         </form>
@@ -77,23 +76,34 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
+        function encryptUrl(url) {
+            return btoa(url); // تشفير الرابط إلى Base64
+        }
+
+        function decryptUrl(encodedUrl) {
+            return atob(encodedUrl); // فك التشفير من Base64
+        }
+
         document.getElementById('searchForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const studentID = document.getElementById('studentID').value.trim();
             console.log('Entered Student ID:', studentID);
 
+            // رابط ملف CSV المشفر
+            const encryptedUrl = encryptUrl('https://raw.githubusercontent.com/BHosts/fainalb/main/students.csv');
+            
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'https://raw.githubusercontent.com/BHosts/fainalb/main/students.csv', true);
+            xhr.open('GET', decryptUrl(encryptedUrl), true); // فك التشفير للوصول إلى الرابط
             xhr.responseType = 'blob';
 
             xhr.onload = function() {
                 const blob = xhr.response;
                 Papa.parse(blob, {
                     complete: function(results) {
-                        const students = results.data.slice(1); // إزالة عناوين الأعمدة
+                        const students = results.data.slice(1); // إزالة العناوين
                         console.log('Parsed students:', students);
 
-                        localStorage.setItem('allStudents', JSON.stringify(students)); // تخزين جميع البيانات
+                        localStorage.setItem('allStudents', JSON.stringify(students)); // تخزين البيانات
                         localStorage.setItem('studentID', studentID); // تخزين الرقم الجامعي
 
                         window.location.href = 'student.html'; // التوجه للصفحة التالية
