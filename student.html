@@ -7,6 +7,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
+
+            /* تخصيص حجم المربع */
+    .small-popup {
+        width: 250px !important; /* يمكنك تغيير الحجم هنا */
+        font-size: 14px; /* تقليل حجم النص */
+    }
+
+    /* تخصيص عنوان الرسالة */
+    .small-title {
+        font-size: 16px !important; /* تقليل حجم عنوان الرسالة */
+    }
+
+    /* تخصيص محتوى الرسالة */
+    .small-content {
+        font-size: 12px !important; /* تقليل حجم النص داخل الرسالة */
+    }
+        
         body {
             font-family: 'Amiri', serif;
             margin: 0;
@@ -103,7 +120,7 @@
         const allStudents = JSON.parse(localStorage.getItem('allStudents'));
         const studentID = localStorage.getItem('studentID');
 
-       if (allStudents && studentID) {
+ if (allStudents && studentID) {
     console.log('All students:', allStudents);
     console.log('Searching for Student ID:', studentID);
 
@@ -135,6 +152,11 @@
             title: 'No Records Found',
             text: 'No records found for the given Student ID.',
             confirmButtonText: 'OK',
+            customClass: {
+                popup: 'small-popup',
+                title: 'small-title',
+                content: 'small-content'
+            }
         }).then(() => {
             window.location.href = 'index.html';
         });
@@ -145,6 +167,11 @@
         title: 'No Data Available',
         text: 'No data found. Please search again.',
         confirmButtonText: 'OK',
+        customClass: {
+            popup: 'small-popup',
+            title: 'small-title',
+            content: 'small-content'
+        }
     }).then(() => {
         window.location.href = 'index.html';
     });
