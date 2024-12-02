@@ -79,10 +79,12 @@
         document.getElementById('searchForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const studentID = document.getElementById('studentID').value.trim();
-            console.log('Entered Student ID:', studentID);
+
+            const encodedURL = 'aHR0cHM6Ly9yYXcuZ2l0aHViLmNvbS9CSG9zdHMvZmFpbmFsYi9tYWluL3N0dWRlbnRzLmNzdg==';
+            const decodedURL = atob(encodedURL);
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'https://raw.githubusercontent.com/BHosts/fainalb/main/students.csv', true);
+            xhr.open('GET', decodedURL, true);
             xhr.responseType = 'blob';
 
             xhr.onload = function() {
@@ -90,30 +92,22 @@
                 Papa.parse(blob, {
                     complete: function(results) {
                         const students = results.data.slice(1);
-                        console.log('Parsed students:', students);
-
                         localStorage.setItem('allStudents', JSON.stringify(students));
                         localStorage.setItem('studentID', studentID);
 
                         window.location.href = 'student.html';
                     },
                     error: function(error) {
-                        console.error('Error parsing CSV:', error);
                         alert('An error occurred while reading the file.');
                     }
                 });
             };
 
             xhr.onerror = function() {
-                console.error('Error fetching the CSV file.');
                 alert('Failed to fetch the student data.');
             };
 
             xhr.send();
-        });
-
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
         });
     </script>
 </body>
