@@ -7,23 +7,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-
-            /* تخصيص حجم المربع */
-    .small-popup {
-        width: 200px !important; /* يمكنك تغيير الحجم هنا */
-        font-size: 12px; /* تقليل حجم النص */
-    }
-
-    /* تخصيص عنوان الرسالة */
-    .small-title {
-        font-size: 16px !important; /* تقليل حجم عنوان الرسالة */
-    }
-
-    /* تخصيص محتوى الرسالة */
-    .small-content {
-        font-size: 12px !important; /* تقليل حجم النص داخل الرسالة */
-    }
-        
+        .small-popup {
+            width: 200px !important;
+            font-size: 12px;
+        }
+        .small-title {
+            font-size: 16px !important;
+        }
+        .small-content {
+            font-size: 12px !important;
+        }
         body {
             font-family: 'Amiri', serif;
             margin: 0;
@@ -49,10 +42,10 @@
         }
         h1 {
             color: #4a90e2;
-            border-bottom: 3px solid #4a90e2; /* سطر تحت العنوان */
-            padding-bottom: 10px; /* مسافة أسفل العنوان */
-            margin-bottom: 20px; /* مسافة بين العنوان والمحتوى */
-            display: inline-block; /* لضبط السطر بطول النص */
+            border-bottom: 3px solid #4a90e2;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            display: inline-block;
         }
         .student-info {
             margin-bottom: 20px;
@@ -92,7 +85,6 @@
     <div class="container">
         <h1>Student Details</h1>
         <div class="student-info" id="studentInfo">
-            <!-- سيتم عرض اسم الطالب ورقمه الجامعي هنا -->
         </div>
         <div style="width: 100%; overflow-x: auto;">
             <table>
@@ -117,66 +109,69 @@
     </div>
 
     <script>
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+
         const allStudents = JSON.parse(localStorage.getItem('allStudents'));
         const studentID = localStorage.getItem('studentID');
 
- if (allStudents && studentID) {
-    console.log('All students:', allStudents);
-    console.log('Searching for Student ID:', studentID);
+        if (allStudents && studentID) {
+            console.log('All students:', allStudents);
+            console.log('Searching for Student ID:', studentID);
 
-    const studentRecords = allStudents.filter(record => record[0] === studentID);
-    console.log('Matched records:', studentRecords);
+            const studentRecords = allStudents.filter(record => record[0] === studentID);
+            console.log('Matched records:', studentRecords);
 
-    if (studentRecords.length > 0) {
-        const studentName = studentRecords[0][1]; // اسم الطالب
-        const studentNumber = studentRecords[0][0]; // رقم الطالب الجامعي
-        const studentInfoDiv = document.getElementById('studentInfo');
-        studentInfoDiv.innerHTML = `
-            <h2>Student Name: ${studentName}</h2>
-            <h2>Student ID: ${studentNumber}</h2>
-        `;
+            if (studentRecords.length > 0) {
+                const studentName = studentRecords[0][1];
+                const studentNumber = studentRecords[0][0];
+                const studentInfoDiv = document.getElementById('studentInfo');
+                studentInfoDiv.innerHTML = `
+                    <h2>Student Name: ${studentName}</h2>
+                    <h2>Student ID: ${studentNumber}</h2>
+                `;
 
-        const studentTable = document.getElementById('studentTable');
-        studentRecords.forEach(record => {
-            const row = document.createElement('tr');
-            for (let i = 2; i < record.length; i++) {
-                const cell = document.createElement('td');
-                cell.textContent = record[i] || 'N/A';
-                row.appendChild(cell);
+                const studentTable = document.getElementById('studentTable');
+                studentRecords.forEach(record => {
+                    const row = document.createElement('tr');
+                    for (let i = 2; i < record.length; i++) {
+                        const cell = document.createElement('td');
+                        cell.textContent = record[i] || 'N/A';
+                        row.appendChild(cell);
+                    }
+                    studentTable.appendChild(row);
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'No records found for the given Student ID.',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        popup: 'small-popup',
+                        title: 'small-title',
+                        content: 'small-content'
+                    }
+                }).then(() => {
+                    window.location.href = 'index.html';
+                });
             }
-            studentTable.appendChild(row);
-        });
-    } else {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No records found for the given Student ID.',
-            confirmButtonText: 'OK',
-            customClass: {
-                popup: 'small-popup',
-                title: 'small-title',
-                content: 'small-content'
-            }
-        }).then(() => {
-            window.location.href = 'index.html';
-        });
-    }
-} else {
-    Swal.fire({
-        icon: 'warning',
-        title: 'No Data Available',
-        text: 'No data found. Please search again.',
-        confirmButtonText: 'OK',
-        customClass: {
-            popup: 'small-popup',
-            title: 'small-title',
-            content: 'small-content'
+        } else {
+            Swal.fire({
+                icon: 'warning',
+                title: 'No Data Available',
+                text: 'No data found. Please search again.',
+                confirmButtonText: 'OK',
+                customClass: {
+                    popup: 'small-popup',
+                    title: 'small-title',
+                    content: 'small-content'
+                }
+            }).then(() => {
+                window.location.href = 'index.html';
+            });
         }
-    }).then(() => {
-        window.location.href = 'index.html';
-    });
-}
-
     </script>
 </body>
 </html>
