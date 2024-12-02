@@ -10,7 +10,7 @@
             font-family: 'Amiri', serif;
             margin: 0;
             padding: 0;
-            background-color: #fff; /* تغيير الخلفية إلى الأبيض */
+            background-color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -31,6 +31,10 @@
         }
         h1 {
             color: #4a90e2;
+            border-bottom: 3px solid #4a90e2; /* سطر تحت العنوان */
+            padding-bottom: 10px; /* مسافة أسفل العنوان */
+            margin-bottom: 20px; /* مسافة بين العنوان والمحتوى */
+            display: inline-block; /* لضبط السطر بطول النص */
         }
         .student-info {
             margin-bottom: 20px;
@@ -110,8 +114,8 @@
                 const studentNumber = studentRecords[0][0]; // رقم الطالب الجامعي
                 const studentInfoDiv = document.getElementById('studentInfo');
                 studentInfoDiv.innerHTML = `
-                    <h2>Student Name : ${studentName}</h2>
-                    <h2>Students ID: ${studentNumber}</h2>
+                    <h2>Student Name: ${studentName}</h2>
+                    <h2>Student ID: ${studentNumber}</h2>
                 `;
 
                 const studentTable = document.getElementById('studentTable');
