@@ -76,27 +76,46 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
-        // دالة تشفير الرابط
-        function encryptUrl(url) {
-            return btoa(url);
+        // دالة التشفير المتقدم
+        function complexEncrypt(url, key) {
+            let result = '';
+            for (let i = 0; i < url.length; i++) {
+                const charCode = url.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+                result += String.fromCharCode(charCode);
+            }
+            return btoa(result);
         }
 
-        // دالة فك تشفير الرابط
-        function decryptUrl(encodedUrl) {
-            return atob(encodedUrl);
+        // دالة فك التشفير
+        function complexDecrypt(encodedUrl, key) {
+            const decoded = atob(encodedUrl);
+            let result = '';
+            for (let i = 0; i < decoded.length; i++) {
+                const charCode = decoded.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+                result += String.fromCharCode(charCode);
+            }
+            return result;
         }
+
+        // المفتاح السري (يفضل أن يكون معقد وطويل)
+        const SECRET_KEY = 'X9b#mK2$pQ7zL4@fN1!';
+
+        // الرابط المشفر (سيبدو مختلفاً تماماً)
+        const ENCRYPTED_URL = complexEncrypt(
+            'https://raw.githubusercontent.com/BHosts/fainalb/main/students.csv', 
+            SECRET_KEY
+        );
 
         document.getElementById('searchForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const studentID = document.getElementById('studentID').value.trim();
             console.log('Entered Student ID:', studentID);
 
-            // تشفير الرابط بشكل بسيط
-            const csvUrl = 'https://raw.githubusercontent.com/BHosts/fainalb/main/students.csv';
-            const encryptedUrl = encryptUrl(csvUrl);
+            // فك تشفير الرابط
+            const csvUrl = complexDecrypt(ENCRYPTED_URL, SECRET_KEY);
             
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', decryptUrl(encryptedUrl), true);
+            xhr.open('GET', csvUrl, true);
             xhr.responseType = 'blob';
 
             xhr.onload = function() {
@@ -129,6 +148,13 @@
         // منع القائمة السياقية (Right-click)
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
+        });
+
+        // إخفاء مصدر الصفحة
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+                e.preventDefault();
+            }
         });
     </script>
 </body>
