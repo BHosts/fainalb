@@ -7,16 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        .small-popup {
-            width: 200px !important;
-            font-size: 12px;
-        }
-        .small-title {
-            font-size: 16px !important;
-        }
-        .small-content {
-            font-size: 12px !important;
-        }
         body {
             font-family: 'Amiri', serif;
             margin: 0;
@@ -117,11 +107,7 @@
         const studentID = localStorage.getItem('studentID');
 
         if (allStudents && studentID) {
-            console.log('All students:', allStudents);
-            console.log('Searching for Student ID:', studentID);
-
             const studentRecords = allStudents.filter(record => record[0] === studentID);
-            console.log('Matched records:', studentRecords);
 
             if (studentRecords.length > 0) {
                 const studentName = studentRecords[0][1];
@@ -145,14 +131,19 @@
             } else {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Error',
+                    title: 'No Records Found',
                     text: 'No records found for the given Student ID.',
                     confirmButtonText: 'OK',
                     customClass: {
-                        popup: 'small-popup',
-                        title: 'small-title',
-                        content: 'small-content'
-                    }
+                        popup: 'medium-popup',
+                        title: 'medium-title',
+                        content: 'medium-content'
+                    },
+                    width: '400px',
+                    padding: '20px',
+                    background: '#fff',
+                    iconColor: '#d9534f',
+                    confirmButtonColor: '#d9534f'
                 }).then(() => {
                     window.location.href = 'index.html';
                 });
@@ -164,10 +155,15 @@
                 text: 'No data found. Please search again.',
                 confirmButtonText: 'OK',
                 customClass: {
-                    popup: 'small-popup',
-                    title: 'small-title',
-                    content: 'small-content'
-                }
+                    popup: 'medium-popup',
+                    title: 'medium-title',
+                    content: 'medium-content'
+                },
+                width: '400px',
+                padding: '20px',
+                background: '#fff',
+                iconColor: '#f0ad4e',
+                confirmButtonColor: '#f0ad4e'
             }).then(() => {
                 window.location.href = 'index.html';
             });
