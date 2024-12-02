@@ -8,20 +8,33 @@
     <style>
         body {
             font-family: 'Amiri', serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            padding: 0;
             background-color: #f0f0f0;
             text-align: center;
         }
-        table {
-            width: 80%;
-            border-collapse: collapse;
+        .container {
+            max-width: 90%;
             margin: 20px auto;
-            background: #fff;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #4a90e2;
+        }
+        .student-info {
+            margin-bottom: 20px;
+        }
+        .student-info h2 {
+            color: #333;
+            margin: 5px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
         th, td {
             border: 1px solid #ddd;
@@ -38,17 +51,30 @@
     </style>
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th>Test Name</th>
-                <th>Score</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody id="studentTable">
-        </tbody>
-    </table>
+    <div class="container">
+        <h1>Student Details</h1>
+        <div class="student-info" id="studentInfo">
+            <!-- سيتم تعبئة اسم الطالب ورقمه الجامعي هنا -->
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>COURSE</th>
+                    <th>eDay</th>
+					<th>eTime</th>
+					<th>building</th>
+					<th>room</th>
+					<th>secId</th>
+					<th>branch</th>
+					<th>serInRoom</th>
+					<th>TRACK</th>					
+                </tr>
+            </thead>
+            <tbody id="studentTable">
+            </tbody>
+        </table>
+    </div>
 
     <script>
         const allStudents = JSON.parse(localStorage.getItem('allStudents'));
@@ -58,21 +84,31 @@
             console.log('All students:', allStudents);
             console.log('Searching for Student ID:', studentID);
 
+            // البحث عن جميع السجلات المطابقة للرقم الجامعي
             const studentRecords = allStudents.filter(record => record[0] === studentID);
             console.log('Matched records:', studentRecords);
 
-            const studentTable = document.getElementById('studentTable');
-            studentRecords.forEach(record => {
-                const row = document.createElement('tr');
-                for (let i = 1; i < record.length; i++) {
-                    const cell = document.createElement('td');
-                    cell.textContent = record[i] || 'N/A';
-                    row.appendChild(cell);
-                }
-                studentTable.appendChild(row);
-            });
+            // عرض معلومات الطالب الأساسية (الاسم والرقم الجامعي)
+            if (studentRecords.length > 0) {
+                const studentName = studentRecords[0][1]; // اسم الطالب من أول سجل
+                const studentInfoDiv = document.getElementById('studentInfo');
+                studentInfoDiv.innerHTML = `
+                    <h2>Student Name: ${studentName}</h2>
+                    <h2>Student ID: ${studentID}</h2>
+                `;
 
-            if (studentRecords.length === 0) {
+                // عرض السجلات في الجدول
+                const studentTable = document.getElementById('studentTable');
+                studentRecords.forEach(record => {
+                    const row = document.createElement('tr');
+                    for (let i = 2; i < record.length; i++) {
+                        const cell = document.createElement('td');
+                        cell.textContent = record[i] || 'N/A';
+                        row.appendChild(cell);
+                    }
+                    studentTable.appendChild(row);
+                });
+            } else {
                 alert('No records found for the given Student ID.');
                 window.location.href = 'index.html';
             }
