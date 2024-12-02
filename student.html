@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Details</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             font-family: 'Amiri', serif;
@@ -102,40 +103,53 @@
         const allStudents = JSON.parse(localStorage.getItem('allStudents'));
         const studentID = localStorage.getItem('studentID');
 
-        if (allStudents && studentID) {
-            console.log('All students:', allStudents);
-            console.log('Searching for Student ID:', studentID);
+       if (allStudents && studentID) {
+    console.log('All students:', allStudents);
+    console.log('Searching for Student ID:', studentID);
 
-            const studentRecords = allStudents.filter(record => record[0] === studentID);
-            console.log('Matched records:', studentRecords);
+    const studentRecords = allStudents.filter(record => record[0] === studentID);
+    console.log('Matched records:', studentRecords);
 
-            if (studentRecords.length > 0) {
-                const studentName = studentRecords[0][1]; // اسم الطالب
-                const studentNumber = studentRecords[0][0]; // رقم الطالب الجامعي
-                const studentInfoDiv = document.getElementById('studentInfo');
-                studentInfoDiv.innerHTML = `
-                    <h2>Student Name: ${studentName}</h2>
-                    <h2>Student ID: ${studentNumber}</h2>
-                `;
+    if (studentRecords.length > 0) {
+        const studentName = studentRecords[0][1]; // اسم الطالب
+        const studentNumber = studentRecords[0][0]; // رقم الطالب الجامعي
+        const studentInfoDiv = document.getElementById('studentInfo');
+        studentInfoDiv.innerHTML = `
+            <h2>Student Name: ${studentName}</h2>
+            <h2>Student ID: ${studentNumber}</h2>
+        `;
 
-                const studentTable = document.getElementById('studentTable');
-                studentRecords.forEach(record => {
-                    const row = document.createElement('tr');
-                    for (let i = 2; i < record.length; i++) {
-                        const cell = document.createElement('td');
-                        cell.textContent = record[i] || 'N/A';
-                        row.appendChild(cell);
-                    }
-                    studentTable.appendChild(row);
-                });
-            } else {
-                alert('No records found for the given Student ID.');
-                window.location.href = 'index.html';
+        const studentTable = document.getElementById('studentTable');
+        studentRecords.forEach(record => {
+            const row = document.createElement('tr');
+            for (let i = 2; i < record.length; i++) {
+                const cell = document.createElement('td');
+                cell.textContent = record[i] || 'N/A';
+                row.appendChild(cell);
             }
-        } else {
-            alert('No data found. Please search again.');
+            studentTable.appendChild(row);
+        });
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'No Records Found',
+            text: 'No records found for the given Student ID.',
+            confirmButtonText: 'OK',
+        }).then(() => {
             window.location.href = 'index.html';
-        }
+        });
+    }
+} else {
+    Swal.fire({
+        icon: 'warning',
+        title: 'No Data Available',
+        text: 'No data found. Please search again.',
+        confirmButtonText: 'OK',
+    }).then(() => {
+        window.location.href = 'index.html';
+    });
+}
+
     </script>
 </body>
 </html>
