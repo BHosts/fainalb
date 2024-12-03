@@ -25,6 +25,11 @@
             box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 250px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
         }
         h1 {
             color: #4a90e2;
@@ -109,16 +114,13 @@
             <input type="password" id="studentID" required>
             <button type="submit">Search</button>
         </form>
-   
         <a href="https://raw.githubusercontent.com/BHosts/fainalb/main/students.csv" class="hidden-link" id="hiddenExcelLink">Excel Link</a>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
-
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
-
 
         document.getElementById('searchForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -153,7 +155,6 @@
                                     confirmButton: 'swal2-confirm'
                                 }
                             }).then(() => {
-                              
                                 window.scrollTo(0, 0); 
                                 document.body.style.overflow = 'hidden';
                             });
