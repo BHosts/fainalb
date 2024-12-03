@@ -32,10 +32,27 @@
         }
         .student-info {
             margin-bottom: 20px;
+            position: relative;
         }
         .student-info h2 {
             color: #333;
             margin: 5px 0;
+        }
+        #backButton {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            transform: translateY(10px);
+            padding: 10px 20px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #backButton:hover {
+            background-color: #357ab8;
         }
         table {
             width: 100%;
@@ -55,19 +72,6 @@
         td {
             background-color: #f9f9f9;
         }
-        #backButton {
-            margin-top: 2cm;
-            padding: 10px 20px;
-            background-color: #4a90e2;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        #backButton:hover {
-            background-color: #357ab8;
-        }
         @media (max-width: 768px) {
             th, td {
                 font-size: 14px;
@@ -80,6 +84,7 @@
     <div class="container">
         <h1>Student Details</h1>
         <div class="student-info" id="studentInfo">
+            <button id="backButton" onclick="goBack()">رجوع</button>
         </div>
         <div style="width: 100%; overflow-x: auto;">
             <table>
@@ -101,7 +106,6 @@
                 </tbody>
             </table>
         </div>
-        <button id="backButton" onclick="goBack()">رجوع</button>
     </div>
 
     <script>
@@ -119,7 +123,7 @@
                 const studentName = studentRecords[0][1];
                 const studentNumber = studentRecords[0][0];
                 const studentInfoDiv = document.getElementById('studentInfo');
-                studentInfoDiv.innerHTML = `
+                studentInfoDiv.innerHTML += `
                     <h2>Student Name: ${studentName}</h2>
                     <h2>Student ID: ${studentNumber}</h2>
                 `;
