@@ -23,18 +23,20 @@
             position: relative;
         }
         .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            text-align: center;
             position: relative;
+        }
+        .header img {
+            width: 150px;
+            height: auto;
+            margin-bottom: 10px;
         }
         .header h1 {
             color: #4a90e2;
-            margin: 0 auto;
+            margin: 10px auto;
             padding-bottom: 10px;
             border-bottom: 3px solid #4a90e2;
             display: inline-block;
-            text-align: center;
         }
         .student-info {
             text-align: center;
@@ -46,6 +48,7 @@
         .back-button-container {
             position: absolute;
             left: 10px;
+            top: 20px;
         }
         #backButton {
             padding: 10px 20px;
@@ -91,6 +94,7 @@
             <div class="back-button-container">
                 <button id="backButton" onclick="goBack()">Back</button>
             </div>
+            <img src="logo.png" alt="University Logo">
             <h1>Student Details</h1>
         </div>
         <div class="student-info" id="studentInfo"></div>
@@ -116,10 +120,6 @@
     </div>
 
     <script>
-        document.addEventListener('contextmenu', function (e) {
-            e.preventDefault();
-        });
-
         const allStudents = JSON.parse(localStorage.getItem('allStudents'));
         const studentID = localStorage.getItem('studentID');
 
@@ -146,44 +146,12 @@
                     studentTable.appendChild(row);
                 });
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error !',
-                    text: 'No records found for the given Student ID.',
-                    confirmButtonText: 'OK',
-                    customClass: {
-                        popup: 'small-popup',
-                        title: 'small-title',
-                        content: 'small-content'
-                    },
-                    width: '300px',
-                    padding: '15px',
-                    background: '#fff',
-                    iconColor: '#d9534f',
-                    confirmButtonColor: '#d9534f'
-                }).then(() => {
-                    window.location.href = 'index.html';
-                });
+                alert('No records found for the given Student ID.');
+                window.location.href = 'index.html';
             }
         } else {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Error !',
-                text: 'No data found. Please search again.',
-                confirmButtonText: 'OK',
-                customClass: {
-                    popup: 'small-popup',
-                    title: 'small-title',
-                    content: 'small-content'
-                },
-                width: '300px',
-                padding: '15px',
-                background: '#fff',
-                iconColor: '#f0ad4e',
-                confirmButtonColor: '#f0ad4e'
-            }).then(() => {
-                window.location.href = 'index.html';
-            });
+            alert('No data found. Please search again.');
+            window.location.href = 'index.html';
         }
 
         function goBack() {
