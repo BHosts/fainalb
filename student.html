@@ -50,9 +50,8 @@
             padding-top: 5px;
         }
         .back-button-container {
-            position: absolute;
-            left: 10px;
-            top: 20px;
+            text-align: center;
+            margin-top: 20px;
         }
         #backButton {
             padding: 10px 20px;
@@ -95,9 +94,6 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="back-button-container">
-                <button id="backButton" onclick="goBack()">Back</button>
-            </div>
             <img src="logo.png" alt="University Logo">
             <h1>Student Details</h1>
         </div>
@@ -121,6 +117,11 @@
                 <tbody id="studentTable"></tbody>
             </table>
         </div>
+
+        <!-- Back Button Positioned Below the Table -->
+        <div class="back-button-container">
+            <button id="backButton" onclick="goBack()">Back</button>
+        </div>
     </div>
 
     <script>
@@ -134,7 +135,7 @@
                 const studentName = studentRecords[0][1];
                 const studentNumber = studentRecords[0][0];
                 const studentInfoDiv = document.getElementById('studentInfo');
-                studentInfoDiv.innerHTML = `
+                studentInfoDiv.innerHTML = ` 
                     <h2>Student Name: ${studentName}</h2>
                     <h2>Student ID: ${studentNumber}</h2>
                 `;
