@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Information</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             font-family: 'Amiri', serif;
@@ -85,39 +86,50 @@
             e.preventDefault();
             const studentID = document.getElementById('studentID').value.trim();
 
-            const part1 = 'https://raw.githubusercontent.com/';
-            const part2 = 'BHosts/';
-            const part3 = 'fainalb/';
-            const part4 = 'main/';
-            const fileName = 'students';
-            const fileExtension = '.csv';
-
-            const fullURL = part1 + part2 + part3 + part4 + fileName + fileExtension;
+            const fileURL = 'https://raw.githubusercontent.com/BHosts/fainalb/main/students.csv';
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', fullURL, true);
-
+            xhr.open('GET', fileURL, true);
             xhr.responseType = 'blob';
 
             xhr.onload = function() {
                 const blob = xhr.response;
                 Papa.parse(blob, {
                     complete: function(results) {
-                        const students = results.data.slice(1);
+                        const students = results.data.slice(1); // Skip header row
+                        const studentExists = students.some(student => student[0] === studentID);
 
-                        localStorage.setItem('allStudents', JSON.stringify(students));
-                        localStorage.setItem('studentID', studentID);
-
-                        window.location.href = 'student.html';
+                        if (studentExists) {
+                            localStorage.setItem('allStudents', JSON.stringify(students));
+                            localStorage.setItem('studentID', studentID);
+                            window.location.href = 'student.html';
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Student Not Found',
+                                text: 'The entered ID does not match any student.',
+                                confirmButtonText: 'Try Again'
+                            });
+                        }
                     },
                     error: function(error) {
-                        alert('An error occurred while reading the file.');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An error occurred while reading the file.',
+                            confirmButtonText: 'OK'
+                        });
                     }
                 });
             };
 
             xhr.onerror = function() {
-                alert('Failed to fetch the student data.');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Network Error',
+                    text: 'Failed to fetch the student data.',
+                    confirmButtonText: 'OK'
+                });
             };
 
             xhr.send();
