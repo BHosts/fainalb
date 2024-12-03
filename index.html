@@ -16,7 +16,7 @@
             margin: 0;
             background-color: #f0f0f0;
             text-align: center;
-            overflow: hidden;  /* منع التمرير وتثبيت الصفحة */
+            overflow: hidden; 
         }
         .container {
             background-color: #fff;
@@ -109,13 +109,16 @@
             <input type="password" id="studentID" required>
             <button type="submit">Search</button>
         </form>
+   
         <a href="https://raw.githubusercontent.com/BHosts/fainalb/main/students.csv" class="hidden-link" id="hiddenExcelLink">Excel Link</a>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
+
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
+
 
         document.getElementById('searchForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -150,9 +153,9 @@
                                     confirmButton: 'swal2-confirm'
                                 }
                             }).then(() => {
-                                // الحفاظ على الصفحة ثابتة وعدم تحريكها
-                                window.scrollTo(0, 0); // منع التمرير
-                                document.body.style.overflow = 'hidden'; // إيقاف التمرير عند إغلاق الرسالة
+                              
+                                window.scrollTo(0, 0); 
+                                document.body.style.overflow = 'hidden';
                             });
                         }
                     },
@@ -169,8 +172,8 @@
                                 confirmButton: 'swal2-confirm'
                             }
                         }).then(() => {
-                            window.scrollTo(0, 0); // الحفاظ على الصفحة ثابتة
-                            document.body.style.overflow = 'hidden'; // إيقاف التمرير عند إغلاق الرسالة
+                            window.scrollTo(0, 0); 
+                            document.body.style.overflow = 'hidden'; 
                         });
                     }
                 });
@@ -189,8 +192,8 @@
                         confirmButton: 'swal2-confirm'
                     }
                 }).then(() => {
-                    window.scrollTo(0, 0); // الحفاظ على الصفحة ثابتة
-                    document.body.style.overflow = 'hidden'; // إيقاف التمرير عند إغلاق الرسالة
+                    window.scrollTo(0, 0); 
+                    document.body.style.overflow = 'hidden'; 
                 });
             };
 
