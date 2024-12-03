@@ -16,6 +16,7 @@
             margin: 0;
             background-color: #f0f0f0;
             text-align: center;
+            overflow: hidden;  /* منع التمرير وتثبيت الصفحة */
         }
         .container {
             background-color: #fff;
@@ -149,7 +150,9 @@
                                     confirmButton: 'swal2-confirm'
                                 }
                             }).then(() => {
-                                window.scrollTo(0, 0);
+                                // الحفاظ على الصفحة ثابتة وعدم تحريكها
+                                window.scrollTo(0, 0); // منع التمرير
+                                document.body.style.overflow = 'hidden'; // إيقاف التمرير عند إغلاق الرسالة
                             });
                         }
                     },
@@ -166,7 +169,8 @@
                                 confirmButton: 'swal2-confirm'
                             }
                         }).then(() => {
-                            window.scrollTo(0, 0);
+                            window.scrollTo(0, 0); // الحفاظ على الصفحة ثابتة
+                            document.body.style.overflow = 'hidden'; // إيقاف التمرير عند إغلاق الرسالة
                         });
                     }
                 });
@@ -185,7 +189,8 @@
                         confirmButton: 'swal2-confirm'
                     }
                 }).then(() => {
-                    window.scrollTo(0, 0);
+                    window.scrollTo(0, 0); // الحفاظ على الصفحة ثابتة
+                    document.body.style.overflow = 'hidden'; // إيقاف التمرير عند إغلاق الرسالة
                 });
             };
 
