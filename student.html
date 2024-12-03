@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Details</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Amiri', serif;
             margin: 0;
             padding: 0;
             background-color: #fff;
@@ -90,42 +90,12 @@
                 padding: 8px;
             }
         }
-
-        
-        .swal2-popup {
-            width: 250px !important; 
-            max-width: 50%; 
-            padding: 20px; 
-        }
-
-        .swal2-title {
-            font-family: 'Roboto', sans-serif; 
-            font-size: 14px; 
-            color: #4a90e2;
-        }
-
-        .swal2-content {
-            font-family: 'Roboto', sans-serif; 
-            font-size: 10px; 
-            color: #333;
-        }
-
-        .swal2-confirm {
-            font-size: 16px; 
-            background-color: #4a90e2; 
-            border: none;
-            border-radius: 5px;
-        }
-
-        .swal2-confirm:hover {
-            background-color: #357ab8; 
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <img src="Logo3.png" alt="University Logo">
+            <img src="logo.png" alt="University Logo">
             <h1>Student Details</h1>
         </div>
         <div class="student-info" id="studentInfo"></div>
@@ -149,6 +119,7 @@
             </table>
         </div>
 
+        <!-- Back Button Positioned Below the Table -->
         <div class="back-button-container">
             <button id="backButton" onclick="goBack()">Back</button>
         </div>
@@ -181,42 +152,19 @@
                     studentTable.appendChild(row);
                 });
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'No Records Found',
-                    text: 'No data was found for the entered ID.',
-                    confirmButtonText: 'Back',
-                    customClass: {
-                        popup: 'swal2-popup',
-                        title: 'swal2-title',
-                        content: 'swal2-content',
-                        confirmButton: 'swal2-confirm'
-                    }
-                }).then(() => {
-                    window.location.href = 'index.html';
-                });
+                alert('No records found for the given Student ID.');
+                window.location.href = 'index.html';
             }
         } else {
-            Swal.fire({
-                icon: 'warning',
-                title: 'No Data Available',
-                text: 'Please search again.',
-                confirmButtonText: 'Back',
-                customClass: {
-                    popup: 'swal2-popup',
-                    title: 'swal2-title',
-                    content: 'swal2-content',
-                    confirmButton: 'swal2-confirm'
-                }
-            }).then(() => {
-                window.location.href = 'index.html';
-            });
+            alert('No data found. Please search again.');
+            window.location.href = 'index.html';
         }
 
         function goBack() {
             window.location.href = 'index.html';
         }
 
+        // Disable right-click context menu
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });

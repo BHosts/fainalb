@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Information</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             font-family: 'Amiri', serif;
@@ -16,7 +15,6 @@
             margin: 0;
             background-color: #f0f0f0;
             text-align: center;
-            overflow: hidden; 
         }
         .container {
             background-color: #fff;
@@ -25,19 +23,14 @@
             box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 250px;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
         }
         h1 {
             color: #4a90e2;
             margin-bottom: 0px;
         }
         .logo {
-            width: 350px;
-            height: 150px;
+            width: 250px;
+            height: 100px;
             margin-bottom: 0px;
         }
         label {
@@ -68,43 +61,42 @@
         button:hover {
             background-color: #357abd;
         }
-        .hidden-link {
-            color: transparent;
-            text-decoration: none;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="logo3.png" alt="Logo" class="logo">
+        <img src="logo.png" alt="Logo" class="logo">
         <h1>Student Search</h1>
         <form id="searchForm">
             <label for="studentID">Enter your ID</label>
             <input type="password" id="studentID" required>
             <button type="submit">Search</button>
         </form>
-        <a href="#" class="hidden-link" id="hiddenExcelLink">Excel Link</a>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
+        // Disable right-click context menu
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
-
-        // تقسيم الرابط إلى أجزاء
-        const linkPart1 = 'https://raw.githubusercontent.com/';
-        const linkPart2 = 'BHosts/fainalb/main/';
-        const linkPart3 = 'students.csv';
-
-        // إعادة بناء الرابط عند الحاجة
-        const fileURL = linkPart1 + linkPart2 + linkPart3;
 
         document.getElementById('searchForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const studentID = document.getElementById('studentID').value.trim();
 
+            const part1 = 'https://raw.githubusercontent.com/';
+            const part2 = 'BHosts/';
+            const part3 = 'fainalb/';
+            const part4 = 'main/';
+            const fileName = 'students';
+            const fileExtension = '.csv';
+
+            const fullURL = part1 + part2 + part3 + part4 + fileName + fileExtension;
+
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', fileURL, true);
+            xhr.open('GET', fullURL, true);
+
             xhr.responseType = 'blob';
 
             xhr.onload = function() {
@@ -112,66 +104,20 @@
                 Papa.parse(blob, {
                     complete: function(results) {
                         const students = results.data.slice(1);
-                        const studentExists = students.some(student => student[0] === studentID);
 
-                        if (studentExists) {
-                            localStorage.setItem('allStudents', JSON.stringify(students));
-                            localStorage.setItem('studentID', studentID);
-                            window.location.href = 'student.html';
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Student Not Found',
-                                text: 'Please try again',
-                                confirmButtonText: 'OK !',
-                                customClass: {
-                                    popup: 'swal2-popup',
-                                    title: 'swal2-title',
-                                    content: 'swal2-content',
-                                    confirmButton: 'swal2-confirm'
-                                }
-                            }).then(() => {
-                                window.scrollTo(0, 0); 
-                                document.body.style.overflow = 'hidden';
-                            });
-                        }
+                        localStorage.setItem('allStudents', JSON.stringify(students));
+                        localStorage.setItem('studentID', studentID);
+
+                        window.location.href = 'student.html';
                     },
                     error: function(error) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'Error while reading the file.',
-                            confirmButtonText: 'OK !',
-                            customClass: {
-                                popup: 'swal2-popup',
-                                title: 'swal2-title',
-                                content: 'swal2-content',
-                                confirmButton: 'swal2-confirm'
-                            }
-                        }).then(() => {
-                            window.scrollTo(0, 0); 
-                            document.body.style.overflow = 'hidden'; 
-                        });
+                        alert('An error occurred while reading the file.');
                     }
                 });
             };
 
             xhr.onerror = function() {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Network Error',
-                    text: 'Failed fetch data.',
-                    confirmButtonText: 'OK !',
-                    customClass: {
-                        popup: 'swal2-popup',
-                        title: 'swal2-title',
-                        content: 'swal2-content',
-                        confirmButton: 'swal2-confirm'
-                    }
-                }).then(() => {
-                    window.scrollTo(0, 0); 
-                    document.body.style.overflow = 'hidden'; 
-                });
+                alert('Failed to fetch the student data.');
             };
 
             xhr.send();
