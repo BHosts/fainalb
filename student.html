@@ -23,26 +23,30 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             position: relative;
         }
-        h1 {
-            color: #4a90e2;
-            border-bottom: 3px solid #4a90e2;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            display: inline-block;
-        }
-        .student-info {
-            margin-bottom: 20px;
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             position: relative;
         }
-        .student-info h2 {
-            color: #333;
-            margin: 5px 0;
+        .header h1 {
+            color: #4a90e2;
+            margin: 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #4a90e2;
+            display: inline-block;
+        }
+        .back-button-container {
+            text-align: left;
+            margin-left: 0;
+            position: relative;
+        }
+        .back-button-container h3 {
+            margin: 0;
+            color: #4a90e2;
         }
         #backButton {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            transform: translateY(10px);
+            margin-top: 5px;
             padding: 10px 20px;
             background-color: #4a90e2;
             color: white;
@@ -53,6 +57,13 @@
         }
         #backButton:hover {
             background-color: #357ab8;
+        }
+        .student-info {
+            margin-bottom: 20px;
+        }
+        .student-info h2 {
+            color: #333;
+            margin: 5px 0;
         }
         table {
             width: 100%;
@@ -82,10 +93,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>Student Details</h1>
-        <div class="student-info" id="studentInfo">
-            <button id="backButton" onclick="goBack()">Back</button>
+        <div class="header">
+            <div class="back-button-container">
+                <h3>Back</h3>
+                <button id="backButton" onclick="goBack()">رجوع</button>
+            </div>
+            <h1>Student Details</h1>
         </div>
+        <div class="student-info" id="studentInfo"></div>
         <div style="width: 100%; overflow-x: auto;">
             <table>
                 <thead>
@@ -102,8 +117,7 @@
                         <th>TRACK</th>
                     </tr>
                 </thead>
-                <tbody id="studentTable">
-                </tbody>
+                <tbody id="studentTable"></tbody>
             </table>
         </div>
     </div>
@@ -123,7 +137,7 @@
                 const studentName = studentRecords[0][1];
                 const studentNumber = studentRecords[0][0];
                 const studentInfoDiv = document.getElementById('studentInfo');
-                studentInfoDiv.innerHTML += `
+                studentInfoDiv.innerHTML = `
                     <h2>Student Name: ${studentName}</h2>
                     <h2>Student ID: ${studentNumber}</h2>
                 `;
