@@ -76,7 +76,7 @@
 </head>
 <body>
     <div class="container">
-        <img src="Logo3.png" alt="Logo" class="logo">
+        <img src="logo3.png" alt="Logo" class="logo">
         <h1>Student Search</h1>
         <form id="searchForm">
             <label for="studentID">Enter your ID</label>
@@ -90,19 +90,21 @@
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
-
-     
-        const base64Link = 'aHR0cHM6Ly9yYXcuZ2l0aHViLmNvbS9CaG9zdHMvZmFpbmFsYj9tYWluL3N0dWRlbnRzLmNzdg==';
-
-
-        const decodedLink = atob(base64Link);
+        
+        const linkPart1 = 'https://raw';
+        const linkPart2 = '.githubusercontent.com/';
+        const linkPart3 = 'BHosts/';
+        const linkPart4 = 'fainalb/main/';
+        const linkPart5 = 'students';
+        const linkPart6 = '.csv';
+        const fileURL = linkPart1 + linkPart2 + linkPart3 + linkPart4 + linkPart5 + linkPart5;
 
         document.getElementById('searchForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const studentID = document.getElementById('studentID').value.trim();
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', decodedLink, true);
+            xhr.open('GET', fileURL, true);
             xhr.responseType = 'blob';
 
             xhr.onload = function() {
