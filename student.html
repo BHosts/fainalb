@@ -12,23 +12,16 @@
             margin: 0;
             padding: 0;
             background-color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
             text-align: center;
         }
         .container {
             width: 100%;
-            height: 100%;
+            max-width: 100%;
             background-color: #fff;
             padding: 20px;
             box-sizing: border-box;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
+            position: relative;
         }
         h1 {
             color: #4a90e2;
@@ -49,7 +42,6 @@
             max-width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            overflow-x: auto;
         }
         th, td {
             border: 1px solid #ddd;
@@ -62,6 +54,19 @@
         }
         td {
             background-color: #f9f9f9;
+        }
+        #backButton {
+            margin-top: 2cm;
+            padding: 10px 20px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #backButton:hover {
+            background-color: #357ab8;
         }
         @media (max-width: 768px) {
             th, td {
@@ -96,6 +101,7 @@
                 </tbody>
             </table>
         </div>
+        <button id="backButton" onclick="goBack()">رجوع</button>
     </div>
 
     <script>
@@ -167,6 +173,10 @@
             }).then(() => {
                 window.location.href = 'index.html';
             });
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
         }
     </script>
 </body>
