@@ -119,6 +119,7 @@
             </table>
         </div>
 
+        <!-- Back Button Positioned Below the Table -->
         <div class="back-button-container">
             <button id="backButton" onclick="goBack()">Back</button>
         </div>
@@ -136,8 +137,9 @@
                 const studentNumber = studentRecords[0][0];
                 const studentInfoDiv = document.getElementById('studentInfo');
                 studentInfoDiv.innerHTML =  
-                    `<h2>Student Name: ${studentName}</h2>
-                    <h2>Student ID: ${studentNumber}</h2>`;
+                    <h2>Student Name: ${studentName}</h2>
+                    <h2>Student ID: ${studentNumber}</h2>
+                ;
 
                 const studentTable = document.getElementById('studentTable');
                 studentRecords.forEach(record => {
@@ -154,4 +156,18 @@
                 window.location.href = 'index.html';
             }
         } else {
-            alert
+            alert('No data found. Please search again.');
+            window.location.href = 'index.html';
+        }
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        // Disable right-click context menu
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>
