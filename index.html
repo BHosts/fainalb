@@ -3,160 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Details</title>
+    <title>Student Information</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             font-family: 'Amiri', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 0;
-            background-color: #fff;
+            background-color: #f0f0f0;
+            text-align: center;
         }
         .container {
-            width: 100%;
-            max-width: 100%;
             background-color: #fff;
-            padding: 20px;
-            box-sizing: border-box;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
-        .header {
-            text-align: center;
-            position: relative;
-        }
-        .header img {
-            width: 150px;
-            height: auto;
-            margin-bottom: 10px;
-        }
-        .header h1 {
-            color: #4a90e2;
-            margin: 10px auto;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #4a90e2;
-            display: inline-block;
-        }
-        .student-info {
-            text-align: center;
-            margin-top: 10px;
-        }
-        .student-info h2 {
-            margin: 5px 0;
-        }
-        .back-button-container {
-            position: absolute;
-            left: 10px;
-            top: 20px;
-        }
-        #backButton {
-            padding: 10px 20px;
-            background-color: #4a90e2;
-            color: white;
-            border: none;
+            padding: 15px;
             border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        #backButton:hover {
-            background-color: #357ab8;
-        }
-        table {
+            box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+            max-width: 250px;
         }
-        th, td {
-            border: 1px solid #ddd;
+        h1 {
+            color: #4a90e2;
+            margin-bottom: 0px;
+        }
+        .logo {
+            width: 250px;
+            height: 100px;
+            margin-bottom: 0px;
+        }
+        label {
+            color: #4a90e2;
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        input[type="password"] {
+            width: calc(100% - 20px);
             padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
             text-align: center;
+            font-size: 16px;
+            color: #4a90e2;
         }
-        th {
+        button {
             background-color: #4a90e2;
-            color: white;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 15px 35px;
+            cursor: pointer;
+            font-size: 20px;
         }
-        td {
-            background-color: #f9f9f9;
-        }
-        @media (max-width: 768px) {
-            th, td {
-                font-size: 14px;
-                padding: 8px;
-            }
+        button:hover {
+            background-color: #357abd;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="back-button-container">
-                <button id="backButton" onclick="goBack()">Back</button>
-            </div>
-            <img src="logo.png" alt="University Logo">
-            <h1>Student Details</h1>
-        </div>
-        <div class="student-info" id="studentInfo"></div>
-        <div style="width: 100%; overflow-x: auto;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>COURSE</th>
-                        <th>Day</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Building</th>
-                        <th>Room</th>
-                        <th>SecId</th>
-                        <th>Branch</th>
-                        <th>SerInRoom</th>
-                        <th>TRACK</th>
-                    </tr>
-                </thead>
-                <tbody id="studentTable"></tbody>
-            </table>
-        </div>
+        <img src="logo.png" alt="Logo" class="logo">
+        <h1>Student Search</h1>
+        <form id="searchForm">
+            <label for="studentID">Enter your ID</label>
+            <input type="password" id="studentID" required>
+            <button type="submit">Search</button>
+        </form>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
-        const allStudents = JSON.parse(localStorage.getItem('allStudents'));
-        const studentID = localStorage.getItem('studentID');
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const studentID = document.getElementById('studentID').value.trim();
 
-        if (allStudents && studentID) {
-            const studentRecords = allStudents.filter(record => record[0] === studentID);
+            const part1 = 'https://raw.githubusercontent.com/';
+            const part2 = 'BHosts/';
+            const part3 = 'fainalb/';
+            const part4 = 'main/';
+            const fileName = 'students';
+            const fileExtension = '.csv';
 
-            if (studentRecords.length > 0) {
-                const studentName = studentRecords[0][1];
-                const studentNumber = studentRecords[0][0];
-                const studentInfoDiv = document.getElementById('studentInfo');
-                studentInfoDiv.innerHTML = `
-                    <h2>Student Name: ${studentName}</h2>
-                    <h2>Student ID: ${studentNumber}</h2>
-                `;
+            const fullURL = part1 + part2 + part3 + part4 + fileName + fileExtension;
 
-                const studentTable = document.getElementById('studentTable');
-                studentRecords.forEach(record => {
-                    const row = document.createElement('tr');
-                    for (let i = 2; i < record.length; i++) {
-                        const cell = document.createElement('td');
-                        cell.textContent = record[i] || 'N/A';
-                        row.appendChild(cell);
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', fullURL, true);
+
+            xhr.responseType = 'blob';
+
+            xhr.onload = function() {
+                const blob = xhr.response;
+                Papa.parse(blob, {
+                    complete: function(results) {
+                        const students = results.data.slice(1);
+
+                        localStorage.setItem('allStudents', JSON.stringify(students));
+                        localStorage.setItem('studentID', studentID);
+
+                        window.location.href = 'student.html';
+                    },
+                    error: function(error) {
+                        alert('An error occurred while reading the file.');
                     }
-                    studentTable.appendChild(row);
                 });
-            } else {
-                alert('No records found for the given Student ID.');
-                window.location.href = 'index.html';
-            }
-        } else {
-            alert('No data found. Please search again.');
-            window.location.href = 'index.html';
-        }
+            };
 
-        function goBack() {
-            window.location.href = 'index.html';
-        }
+            xhr.onerror = function() {
+                alert('Failed to fetch the student data.');
+            };
+
+            xhr.send();
+        });
     </script>
 </body>
 </html>
