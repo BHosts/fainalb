@@ -68,69 +68,41 @@
         button:hover {
             background-color: #357abd;
         }
-.swal2-popup {
-    width: 200px !important; 
-    height: auto !important; 
-    padding: 15px;
-    font-family: 'Amiri', serif;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.swal2-title {
-    font-size: 15px; 
-    color: #4a90e2;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.swal2-content {
-    font-size: 10px;
-    color: #333;
-    line-height: 1.2;
-}
-
-.swal2-confirm {
-    font-size: 12px; 
-    padding: 5px 15px;
-    background-color: #4a90e2;
-    color: #fff;
-    border-radius: 5px;
-    border: none;
-    transition: background-color 0.3s ease;
-}
-
-
         .hidden-link {
-            color: transparent; 
-            text-decoration: none; 
+            color: transparent;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="logo3.png" alt="Logo" class="logo">
+        <img src="Logo3.png" alt="Logo" class="logo">
         <h1>Student Search</h1>
         <form id="searchForm">
             <label for="studentID">Enter your ID</label>
             <input type="password" id="studentID" required>
             <button type="submit">Search</button>
         </form>
-        <a href="https://raw.githubusercontent.com/BHosts/fainalb/main/students.csv" class="hidden-link" id="hiddenExcelLink">Excel Link</a>
+        <a href="#" class="hidden-link" id="hiddenExcelLink">Excel Link</a>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
     <script>
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
 
+     
+        const base64Link = 'aHR0cHM6Ly9yYXcuZ2l0aHViLmNvbS9CaG9zdHMvZmFpbmFsYj9tYWluL3N0dWRlbnRzLmNzdg==';
+
+
+        const decodedLink = atob(base64Link);
+
         document.getElementById('searchForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const studentID = document.getElementById('studentID').value.trim();
-            const fileURL = 'https://raw.githubusercontent.com/BHosts/fainalb/main/students.csv';
 
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', fileURL, true);
+            xhr.open('GET', decodedLink, true);
             xhr.responseType = 'blob';
 
             xhr.onload = function() {
