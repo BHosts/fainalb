@@ -12,7 +12,6 @@
             margin: 0;
             padding: 0;
             background-color: #fff;
-            text-align: center;
         }
         .container {
             width: 100%;
@@ -31,22 +30,17 @@
         }
         .header h1 {
             color: #4a90e2;
-            margin: 0;
+            margin: 0 auto; /* يجعل النص في المنتصف */
             padding-bottom: 10px;
             border-bottom: 3px solid #4a90e2;
             display: inline-block;
+            text-align: center;
         }
         .back-button-container {
-            text-align: left;
-            margin-left: 0;
-            position: relative;
-        }
-        .back-button-container h3 {
-            margin: 0;
-            color: #4a90e2;
+            position: absolute;
+            left: 10px; /* يجعل الزر في أقصى اليسار */
         }
         #backButton {
-            margin-top: 5px;
             padding: 10px 20px;
             background-color: #4a90e2;
             color: white;
@@ -95,8 +89,7 @@
     <div class="container">
         <div class="header">
             <div class="back-button-container">
-                <h3>Back</h3>
-                <button id="backButton" onclick="goBack()">رجوع</button>
+                <button id="backButton" onclick="goBack()">Back</button>
             </div>
             <h1>Student Details</h1>
         </div>
