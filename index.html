@@ -76,6 +76,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
+        // Disable right-click context menu
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
@@ -84,21 +85,18 @@
             e.preventDefault();
             const studentID = document.getElementById('studentID').value.trim();
 
-            if (studentID === '') {
-                alert('Please enter your student ID');
-                return;
-            }
-
             const part1 = 'https://raw.githubusercontent.com/';
             const part2 = 'BHosts/';
             const part3 = 'fainalb/';
             const part4 = 'main/';
             const fileName = 'students';
             const fileExtension = '.csv';
+
             const fullURL = part1 + part2 + part3 + part4 + fileName + fileExtension;
 
             const xhr = new XMLHttpRequest();
             xhr.open('GET', fullURL, true);
+
             xhr.responseType = 'blob';
 
             xhr.onload = function() {
@@ -106,8 +104,10 @@
                 Papa.parse(blob, {
                     complete: function(results) {
                         const students = results.data.slice(1);
+
                         localStorage.setItem('allStudents', JSON.stringify(students));
                         localStorage.setItem('studentID', studentID);
+
                         window.location.href = 'student.html';
                     },
                     error: function(error) {
