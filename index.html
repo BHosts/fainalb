@@ -16,7 +16,7 @@
             margin: 0;
             background-color: #f0f0f0;
             text-align: center;
-            overflow: hidden;
+            overflow: hidden; 
         }
         .container {
             background-color: #fff;
@@ -72,24 +72,6 @@
             color: transparent;
             text-decoration: none;
         }
-        .swal2-popup {
-            font-family: 'Amiri', serif !important;
-            font-size: 16px !important;
-        }
-        .swal2-title {
-            color: #4a90e2 !important;
-        }
-        .swal2-content {
-            font-size: 18px;
-        }
-        .swal2-confirm {
-            background-color: #4a90e2;
-            border-radius: 4px;
-            padding: 10px 20px;
-        }
-        .swal2-confirm:hover {
-            background-color: #357abd;
-        }
     </style>
 </head>
 <body>
@@ -109,13 +91,13 @@
             e.preventDefault();
         });
 
-        const l1 = 'https://raw';
-        const l2 = '.githubusercontent.com/';
-        const l3 = 'BHosts/';
-        const l4 = 'fainalb/main/';
-        const l5 = 'students';
-        const l6 = '.csv';
-        const fileURL = l1 + l2 + l3 + l4 + l5 + l6;
+        // تقسيم الرابط إلى أجزاء
+        const linkPart1 = 'https://raw.githubusercontent.com/';
+        const linkPart2 = 'BHosts/fainalb/main/';
+        const linkPart3 = 'students.csv';
+
+        // إعادة بناء الرابط عند الحاجة
+        const fileURL = linkPart1 + linkPart2 + linkPart3;
 
         document.getElementById('searchForm').addEventListener('submit', function(e) {
             e.preventDefault();
