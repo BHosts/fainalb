@@ -30,7 +30,7 @@
         }
         .header h1 {
             color: #4a90e2;
-            margin: 0 auto; /* يجعل النص في المنتصف */
+            margin: 0 auto;
             padding-bottom: 10px;
             border-bottom: 3px solid #4a90e2;
             display: inline-block;
@@ -40,9 +40,12 @@
             text-align: center;
             margin-top: 10px;
         }
+        .student-info h2 {
+            margin: 5px 0;
+        }
         .back-button-container {
             position: absolute;
-            left: 10px; /* يجعل الزر في أقصى اليسار */
+            left: 10px;
         }
         #backButton {
             padding: 10px 20px;
@@ -90,9 +93,7 @@
             </div>
             <h1>Student Details</h1>
         </div>
-        <div class="student-info" id="studentInfo">
-            <!-- يتم إدخال اسم الطالب ورقمه الجامعي هنا -->
-        </div>
+        <div class="student-info" id="studentInfo"></div>
         <div style="width: 100%; overflow-x: auto;">
             <table>
                 <thead>
