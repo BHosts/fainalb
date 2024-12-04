@@ -7,90 +7,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-        body {
-            font-family: 'Amiri', serif;
-            margin: 0;
-            padding: 0;
-            background-color: #fff;
-        }
-        .container {
-            width: 100%;
-            max-width: 100%;
-            background-color: #fff;
-            padding: 20px;
-            box-sizing: border-box;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
-        .header {
-            text-align: center;
-            position: relative;
-        }
-        .header img {
-            width: 250px;
-            height: auto;
-            margin-bottom: 10px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            border-radius: 15px;
-        }
-        .header h1 {
-            color: #4a90e2;
-            margin: 0;
-            padding-bottom: 0px;
-            border-bottom: 4px solid #4a90e2;
-            display: inline-block;
-        }
-        .student-info {
-            text-align: center;
-            margin-top: 10px;
-        }
-        .student-info h2 {
-            margin: 0;
-            padding-top: 5px;
-            font-size: 13px;
-        }
-        .back-button-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-        #backButton {
-            padding: 10px 20px;
-            background-color: #4a90e2;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        #backButton:hover {
-            background-color: #357ab8;
-        }
-        table {
-            width: 100%;
-            max-width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-        }
-        th {
-            background-color: #4a90e2;
-            color: white;
-        }
-        td {
-            background-color: #f9f9f9;
-        }
-        @media (max-width: 768px) {
-            th, td {
-                font-size: 14px;
-                padding: 8px;
-            }
-        }
+        body { font-family: 'Amiri', serif; margin: 0; padding: 0; background-color: #fff; }
+        .container { width: 100%; max-width: 100%; background-color: #fff; padding: 20px; box-sizing: border-box; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); position: relative; }
+        .header { text-align: center; position: relative; }
+        .header img { width: 250px; height: auto; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto; border-radius: 15px; }
+        .header h1 { color: #4a90e2; margin: 0; padding-bottom: 0px; border-bottom: 4px solid #4a90e2; display: inline-block; }
+        .student-info { text-align: center; margin-top: 10px; }
+        .student-info h2 { margin: 0; padding-top: 5px; font-size: 13px; }
+        .back-button-container { text-align: center; margin-top: 20px; }
+        #backButton { padding: 10px 20px; background-color: #4a90e2; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        #backButton:hover { background-color: #357ab8; }
+        table { width: 100%; max-width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        th { background-color: #4a90e2; color: white; }
+        td { background-color: #f9f9f9; }
+        @media (max-width: 768px) { th, td { font-size: 14px; padding: 8px; } }
     </style>
 </head>
 <body>
@@ -119,8 +50,6 @@
                 <tbody id="studentTable"></tbody>
             </table>
         </div>
-
-        <!-- Back Button Positioned Below the Table -->
         <div class="back-button-container">
             <button id="backButton" onclick="goBack()">Back</button>
         </div>
@@ -129,19 +58,12 @@
     <script>
         const allStudents = JSON.parse(localStorage.getItem('allStudents'));
         const studentID = localStorage.getItem('studentID');
-
         if (allStudents && studentID) {
             const studentRecords = allStudents.filter(record => record[0] === studentID);
-
             if (studentRecords.length > 0) {
                 const studentName = studentRecords[0][1];
                 const studentNumber = studentRecords[0][0];
-                const studentInfoDiv = document.getElementById('studentInfo');
-                studentInfoDiv.innerHTML = ` 
-                    <h2>Student Name: ${studentName}</h2>
-                    <h2>Student ID: ${studentNumber}</h2>
-                `;
-
+                document.getElementById('studentInfo').innerHTML = `<h2>Student Name: ${studentName}</h2><h2>Student ID: ${studentNumber}</h2>`;
                 const studentTable = document.getElementById('studentTable');
                 studentRecords.forEach(record => {
                     const row = document.createElement('tr');
@@ -160,15 +82,8 @@
             alert('No data found. Please search again.');
             window.location.href = 'index.html';
         }
-
-        function goBack() {
-            window.location.href = 'index.html';
-        }
-
-        // Disable right-click context menu
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
+        function goBack() { window.location.href = 'index.html'; }
+        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
     </script>
 </body>
 </html>
