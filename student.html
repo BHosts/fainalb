@@ -6,22 +6,110 @@
     <title>Student Details</title>
     <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <style>
-        body { font-family: 'Amiri', serif; margin: 0; padding: 0; background-color: #fff; }
-        .container { width: 100%; max-width: 100%; background-color: #fff; padding: 20px; box-sizing: border-box; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); position: relative; }
-        .header { text-align: center; position: relative; }
-        .header img { width: 250px; height: auto; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto; border-radius: 15px; }
-        .header h1 { color: #4a90e2; margin: 0; padding-bottom: 0px; border-bottom: 4px solid #4a90e2; display: inline-block; }
-        .student-info { text-align: center; margin-top: 10px; }
-        .student-info h2 { margin: 0; padding-top: 5px; font-size: 13px; }
-        .back-button-container { text-align: center; margin-top: 20px; }
-        #backButton { padding: 10px 20px; background-color: #4a90e2; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        #backButton:hover { background-color: #357ab8; }
-        table { width: 100%; max-width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
-        th { background-color: #4a90e2; color: white; }
-        td { background-color: #f9f9f9; }
-        @media (max-width: 768px) { th, td { font-size: 14px; padding: 8px; } }
+        body {
+            font-family: 'Amiri', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 100%;
+            background-color: #fff;
+            padding: 20px;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            border-radius: 10px;
+            margin: 20px auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .header img {
+            width: 220px;
+            height: auto;
+            margin: 0 auto 10px auto;
+            display: block;
+            border-radius: 15px;
+        }
+
+        .header h1 {
+            color: #4a90e2;
+            margin: 0;
+            padding-top: 10px;
+            border-top: 5px solid #4a90e2;
+            display: inline-block;
+        }
+
+        .student-info {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .student-info h2 {
+            margin: 0;
+            padding-top: 5px;
+            font-size: 13px;
+        }
+
+        .buttons-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #357ab8;
+        }
+
+        table {
+            width: 100%;
+            max-width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4a90e2;
+            color: white;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #e8f4ff;
+        }
+
+        td:nth-child(4) {
+            width: 200px; /* توسيع الحقل الخاص بالوقت */
+        }
     </style>
 </head>
 <body>
@@ -50,7 +138,8 @@
                 <tbody id="studentTable"></tbody>
             </table>
         </div>
-        <div class="back-button-container">
+        <div class="buttons-container">
+            <button id="savePdfButton">Save as PDF</button>
             <button id="backButton" onclick="goBack()">Back</button>
         </div>
     </div>
@@ -82,8 +171,59 @@
             alert('No data found. Please search again.');
             window.location.href = 'index.html';
         }
-        function goBack() { window.location.href = 'index.html'; }
-        document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
+
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('savePdfButton').addEventListener('click', () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFont('Amiri', 'normal');
+            
+            // Header
+            doc.addImage('Logo4.jpg', 'JPEG', 15, 10, 30, 30);
+            doc.setFontSize(18);
+            doc.text('Student Details', doc.internal.pageSize.width / 2, 25, null, null, 'center');
+            
+            // Student Info
+            doc.setFontSize(12);
+            const studentName = document.getElementById('studentInfo').children[0].textContent.split(":")[1].trim();
+            const studentNumber = document.getElementById('studentInfo').children[1].textContent.split(":")[1].trim();
+            doc.text(`Student Name: ${studentName}`, doc.internal.pageSize.width / 2, 50, null, null, 'center');
+            doc.text(`Student ID: ${studentNumber}`, doc.internal.pageSize.width / 2, 60, null, null, 'center');
+            
+            // Table
+            const headers = [
+                ["Course", "Day", "Date", "Time", "Building", "Room", "SecId", "Branch", "Seat No", "Track"]
+            ];
+
+            const data = [];
+            const rows = document.querySelectorAll('#studentTable tr');
+            rows.forEach(row => {
+                const rowData = [];
+                row.querySelectorAll('td').forEach(cell => rowData.push(cell.textContent.trim()));
+                data.push(rowData);
+            });
+
+            doc.autoTable({
+                head: headers,
+                body: data,
+                startY: 70,
+                theme: 'grid',
+                bodyStyles: { textAlign: 'center', minCellHeight: 15 },
+                headStyles: { halign: 'center' },
+                cellPadding: 5,  // To add padding for better spacing
+                margin: { left: 10, right: 10 },
+            });
+
+            doc.save('Student_Details.pdf');
+        });
+
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
     </script>
 </body>
 </html>
