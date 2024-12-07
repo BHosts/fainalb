@@ -26,7 +26,7 @@
             position: relative;
             border-radius: 10px;
             margin: 20px auto;
-            overflow-x: auto; /* إضافة التمرير الأفقي */
+            overflow-x: auto;
         }
 
         .header {
@@ -87,7 +87,7 @@
             max-width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            table-layout: auto; /* لتوسيع الأعمدة بناءً على المحتوى */
+            table-layout: auto;
         }
 
         th, td {
@@ -109,20 +109,18 @@
             background-color: #e8f4ff;
         }
 
-        /* تخصيص جميع خلايا الهيدر */
         th {
-            white-space: nowrap; /* إبقاء النص في سطر واحد لجميع الأعمدة في الهيدر */
-            padding: 10px 20px; /* إضافة padding لضمان تباعد جيد للنص */
-            text-overflow: ellipsis; /* لإظهار "..." إذا كان النص طويل جدًا */
-            overflow: hidden; /* إخفاء النص الزائد إذا تجاوز الحقل */
+            white-space: nowrap;
+            padding: 10px 20px;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
 
-        /* تخصيص الحقل الذي يحتوي على الوقت */
         td:nth-child(4), th {
-            white-space: nowrap; /* إبقاء النص في سطر واحد */
-            padding: 10px 20px; /* إضافة padding لضمان تباعد جيد للنص */
-            text-overflow: ellipsis; /* لإظهار "..." إذا كان النص طويل جدًا */
-            overflow: hidden; /* إخفاء النص الزائد إذا تجاوز الحقل */
+            white-space: nowrap;
+            padding: 10px 20px;
+            text-overflow: ellipsis;
+            overflow: hidden;
         }
 
         @media (max-width: 600px) {
@@ -137,7 +135,7 @@
             }
 
             td:nth-child(4) {
-                width: 200px; /* تخصيص عرض عمود الوقت في الشاشات الصغيرة */
+                width: 200px;
             }
         }
     </style>
@@ -209,10 +207,7 @@
         document.getElementById('savePdfButton').addEventListener('click', () => {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-
             doc.setFont('Amiri', 'normal');
-            
-            // Header
             doc.setFontSize(18);
             doc.text('Student Details', doc.internal.pageSize.width / 2, 25, null, null);
         });
