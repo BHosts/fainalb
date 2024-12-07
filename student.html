@@ -108,7 +108,7 @@
         }
 
         td:nth-child(4) {
-            width: 200px; /* توسيع الحقل الخاص بالوقت */
+            width: 250px;
         }
     </style>
 </head>
@@ -183,7 +183,6 @@
             doc.setFont('Amiri', 'normal');
             
             // Header
-            //doc.addImage('Logo4.jpg', 'JPEG', 15, 10, 30, 30);
             doc.setFontSize(18);
             doc.text('Student Details', doc.internal.pageSize.width / 2, 25, null, null, 'center');
             
@@ -214,7 +213,7 @@
                 theme: 'grid',
                 bodyStyles: { textAlign: 'center', minCellHeight: 15 },
                 headStyles: { halign: 'center' },
-                cellPadding: 5,  // To add padding for better spacing
+                cellPadding: 5,  
                 margin: { left: 10, right: 10 },
             });
 
