@@ -239,11 +239,24 @@ document.getElementById('savePdfButton').addEventListener('click', () => {
         body: data,
         startY: 70,
         theme: 'grid',
-        bodyStyles: { textAlign: 'center', minCellHeight: 7 },  
-        headStyles: { halign: 'center' },
+        headStyles: { 
+            halign: 'center', 
+            valign: 'middle', 
+            fillColor: [0, 51, 102],
+            textColor: [255, 255, 255]
+        },
+        bodyStyles: { 
+            halign: 'center', 
+            valign: 'middle' 
+        },
+        styles: {
+            halign: 'center',
+            valign: 'middle'
+        },
         cellPadding: 5,
         margin: { left: 10, right: 10 },
     });
+
 
     doc.save('Student_Details.pdf');
 });
