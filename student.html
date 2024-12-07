@@ -26,7 +26,7 @@
             position: relative;
             border-radius: 10px;
             margin: 20px auto;
-            overflow-x: auto;
+            overflow-x: auto; /* إضافة التمرير الأفقي */
         }
 
         .header {
@@ -87,7 +87,7 @@
             max-width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            table-layout: auto;
+            table-layout: auto; /* لتوسيع الأعمدة بناءً على المحتوى */
         }
 
         th, td {
@@ -209,7 +209,7 @@
             const doc = new jsPDF();
 
             doc.setFont('Amiri', 'normal');
-            
+
             // Header
             doc.setFontSize(18);
             doc.text('Student Details', doc.internal.pageSize.width / 2, 25, null, null);
@@ -218,32 +218,34 @@
             const table = document.getElementById('studentTable');
             const rows = table.getElementsByTagName('tr');
             const tableData = [];
-            
+
             // Add table header to PDF
             const headers = Array.from(rows[0].getElementsByTagName('th')).map(th => th.textContent);
             tableData.push(headers);
-            
+
             // Add table rows to PDF
             Array.from(rows).forEach(row => {
                 const rowData = Array.from(row.getElementsByTagName('td')).map(td => td.textContent);
                 tableData.push(rowData);
             });
 
+            // Use autoTable to add the data to PDF
             doc.autoTable({
                 head: [headers],
                 body: tableData.slice(1),
                 startY: 30,
                 theme: 'grid',
                 headStyles: { fillColor: [74, 144, 226] },
-                styles: { cellPadding: 5 },
-                margin: { horizontal: 10 }
+                styles: { cellPadding: 5, fontSize: 10, valign: 'middle' },
+                margin: { horizontal: 10 },
+                columnStyles: { 0: { cellWidth: 'auto' }, 1: { cellWidth: 'auto' }, 2: { cellWidth: 'auto' } } // Adjust column width
             });
 
             doc.save('student_details.pdf');
         });
 
         // Disable right-click context menu
-        document.addEventListener('contextmenu', (e) => {
+        document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
         });
     </script>
