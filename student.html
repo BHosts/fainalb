@@ -204,49 +204,50 @@
             window.location.href = 'index.html';
         }
 
-        document.getElementById('savePdfButton').addEventListener('click', () => {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
+document.getElementById('savePdfButton').addEventListener('click', () => {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-            doc.setFont('Amiri', 'normal');
-            
-            // Header
-            doc.setFontSize(18);
-            doc.text('Student Details', doc.internal.pageSize.width / 2, 25, null, null, 'center');
-            
-            // Student Info
-            doc.setFontSize(12);
-            const studentName = document.getElementById('studentInfo').children[0].textContent.split(":")[1].trim();
-            const studentNumber = document.getElementById('studentInfo').children[1].textContent.split(":")[1].trim();
-            doc.text(`Student Name: ${studentName}`, doc.internal.pageSize.width / 2, 50, null, null, 'center');
-            doc.text(`Student ID: ${studentNumber}`, doc.internal.pageSize.width / 2, 60, null, null, 'center');
-            
-            // Table
-            const headers = [
-                ["Course", "Day", "Date", "Time", "Building", "Room", "SecId", "Branch", "Seat No", "Track"]
-            ];
+    doc.setFont('Amiri', 'normal');
+    
+    // Header
+    doc.setFontSize(18);
+    doc.text('Student Details', doc.internal.pageSize.width / 2, 25, null, null, 'center');
+    
+    // Student Info
+    doc.setFontSize(12);
+    const studentName = document.getElementById('studentInfo').children[0].textContent.split(":")[1].trim();
+    const studentNumber = document.getElementById('studentInfo').children[1].textContent.split(":")[1].trim();
+    doc.text(`Student Name: ${studentName}`, doc.internal.pageSize.width / 2, 50, null, null, 'center');
+    doc.text(`Student ID: ${studentNumber}`, doc.internal.pageSize.width / 2, 60, null, null, 'center');
+    
+    // Table
+    const headers = [
+        ["Course", "Day", "Date", "Time", "Building", "Room", "SecId", "Branch", "Seat No", "Track"]
+    ];
 
-            const data = [];
-            const rows = document.querySelectorAll('#studentTable tr');
-            rows.forEach(row => {
-                const rowData = [];
-                row.querySelectorAll('td').forEach(cell => rowData.push(cell.textContent.trim()));
-                data.push(rowData);
-            });
+    const data = [];
+    const rows = document.querySelectorAll('#studentTable tr');
+    rows.forEach(row => {
+        const rowData = [];
+        row.querySelectorAll('td').forEach(cell => rowData.push(cell.textContent.trim()));
+        data.push(rowData);
+    });
 
-            doc.autoTable({
-                head: headers,
-                body: data,
-                startY: 70,
-                theme: 'grid',
-                bodyStyles: { textAlign: 'center', minCellHeight: 15 },
-                headStyles: { halign: 'center' },
-                cellPadding: 5,  
-                margin: { left: 10, right: 10 },
-            });
+    doc.autoTable({
+        head: headers,
+        body: data,
+        startY: 70,
+        theme: 'grid',
+        bodyStyles: { textAlign: 'center', minCellHeight: 10 },  // تقليص التباعد بين الصفوف
+        headStyles: { halign: 'center' },  // توسيط النص في الرأس
+        cellPadding: 5,
+        margin: { left: 10, right: 10 },
+    });
 
-            doc.save('Student_Details.pdf');
-        });
+    doc.save('Student_Details.pdf');
+});
+
 
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
