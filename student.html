@@ -26,7 +26,7 @@
             position: relative;
             border-radius: 10px;
             margin: 20px auto;
-            overflow-x: auto; /* إضافة التمرير الأفقي */
+            overflow-x: auto; 
         }
 
         .header {
@@ -87,7 +87,7 @@
             max-width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            table-layout: auto; /* لتوسيع الأعمدة بناءً على المحتوى */
+            table-layout: auto; 
         }
 
         th, td {
@@ -239,8 +239,8 @@ document.getElementById('savePdfButton').addEventListener('click', () => {
         body: data,
         startY: 70,
         theme: 'grid',
-        bodyStyles: { textAlign: 'center', minCellHeight: 10 },  // تقليص التباعد بين الصفوف
-        headStyles: { halign: 'center' },  // توسيط النص في الرأس
+        bodyStyles: { textAlign: 'center', minCellHeight: 7 },  
+        headStyles: { halign: 'center' },
         cellPadding: 5,
         margin: { left: 10, right: 10 },
     });
