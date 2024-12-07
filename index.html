@@ -94,7 +94,15 @@
                 alert('Please enter a valid student ID.');
                 return;
             }
-            const fullURL = 'https://raw.githubusercontent.com/BHosts/fainalb/main/students.csv';
+
+            const P1 = 'https://raw.githubusercontent.com/';
+            const P2 = 'BHosts/';
+            const P3 = 'fainalb/';
+            const P4 = 'main/students';
+            const P5 = '.csv';
+
+            const fullURL = P1 + P2 + P3 + P4+ P5;
+            
             const xhr = new XMLHttpRequest();
             xhr.open('GET', fullURL, true);
             xhr.responseType = 'blob';
