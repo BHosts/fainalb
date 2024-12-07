@@ -109,9 +109,12 @@
             background-color: #e8f4ff;
         }
 
+        /* تخصيص الحقل الذي يحتوي على الوقت */
         td:nth-child(4) {
-            width: auto; /* توسيع الحقل الخاص بالوقت */
+            width: auto;
             word-wrap: break-word; /* تمكين التكسير إذا كان النص طويلاً */
+            white-space: normal; /* يسمح للنص بالانتقال إلى سطر جديد */
+            padding: 10px 20px; /* إضافة padding لضمان تباعد جيد للنص */
         }
 
         @media (max-width: 600px) {
