@@ -109,12 +109,21 @@
             background-color: #e8f4ff;
         }
 
-td:nth-child(4) {
-    white-space: nowrap;
-    padding: 10px 20px;
-    text-overflow: ellipsis; 
-    overflow: hidden; 
-}
+        /* تخصيص جميع خلايا الهيدر */
+        th {
+            white-space: nowrap; /* إبقاء النص في سطر واحد لجميع الأعمدة في الهيدر */
+            padding: 10px 20px; /* إضافة padding لضمان تباعد جيد للنص */
+            text-overflow: ellipsis; /* لإظهار "..." إذا كان النص طويل جدًا */
+            overflow: hidden; /* إخفاء النص الزائد إذا تجاوز الحقل */
+        }
+
+        /* تخصيص الحقل الذي يحتوي على الوقت */
+        td:nth-child(4), th {
+            white-space: nowrap; /* إبقاء النص في سطر واحد */
+            padding: 10px 20px; /* إضافة padding لضمان تباعد جيد للنص */
+            text-overflow: ellipsis; /* لإظهار "..." إذا كان النص طويل جدًا */
+            overflow: hidden; /* إخفاء النص الزائد إذا تجاوز الحقل */
+        }
 
         @media (max-width: 600px) {
             table {
@@ -205,44 +214,7 @@ td:nth-child(4) {
             
             // Header
             doc.setFontSize(18);
-            doc.text('Student Details', doc.internal.pageSize.width / 2, 25, null, null, 'center');
-            
-            // Student Info
-            doc.setFontSize(12);
-            const studentName = document.getElementById('studentInfo').children[0].textContent.split(":")[1].trim();
-            const studentNumber = document.getElementById('studentInfo').children[1].textContent.split(":")[1].trim();
-            doc.text(`Student Name: ${studentName}`, doc.internal.pageSize.width / 2, 50, null, null, 'center');
-            doc.text(`Student ID: ${studentNumber}`, doc.internal.pageSize.width / 2, 60, null, null, 'center');
-            
-            // Table
-            const headers = [
-                ["Course", "Day", "Date", "Time", "Building", "Room", "SecId", "Branch", "Seat No", "Track"]
-            ];
-
-            const data = [];
-            const rows = document.querySelectorAll('#studentTable tr');
-            rows.forEach(row => {
-                const rowData = [];
-                row.querySelectorAll('td').forEach(cell => rowData.push(cell.textContent.trim()));
-                data.push(rowData);
-            });
-
-            doc.autoTable({
-                head: headers,
-                body: data,
-                startY: 70,
-                theme: 'grid',
-                bodyStyles: { textAlign: 'center', minCellHeight: 15 },
-                headStyles: { halign: 'center' },
-                cellPadding: 5,  // To add padding for better spacing
-                margin: { left: 10, right: 10 },
-            });
-
-            doc.save('Student_Details.pdf');
-        });
-
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
+            doc.text('Student Details', doc.internal.pageSize.width / 2, 25, null, null);
         });
     </script>
 </body>
