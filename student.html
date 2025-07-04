@@ -272,7 +272,16 @@
           valign: 'middle'
         },
         cellPadding: 5,
-        margin: { left: 10, right: 10 }
+        margin: { left: 10, right: 10 },
+        didParseCell: function (data) {
+          if (data.section === 'body') {
+            if ((data.row.index + 1) % 2 === 0) {
+              data.cell.styles.fillColor = [191, 226, 240]; // #BFE2F0
+            } else {
+              data.cell.styles.fillColor = [255, 255, 255]; // أبيض
+            }
+          }
+        }
       });
 
       doc.save('Student_Details.pdf');
