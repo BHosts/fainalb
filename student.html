@@ -91,7 +91,7 @@
     }
 
     th, td {
-      border: 1px solid #000; /* خط الحدود أسود ناعم */
+      border: 1px solid #505050; /* رمادي داكن ناعم */
       padding: 10px 20px;
       line-height: 1;
       text-align: center;
@@ -110,7 +110,7 @@
     }
 
     tbody tr:nth-child(even) td {
-      background-color: #BFE2F0;
+      background-color: #D9F0FB; /* أزرق فاتح جداً */
     }
 
     @media (max-width: 600px) {
@@ -262,14 +262,14 @@
           valign: 'middle',
           fillColor: [74, 144, 226], // رأس الجدول أزرق
           textColor: [255, 255, 255], // نص أبيض
-          lineColor: [0, 0, 0],       // حدود سوداء
-          lineWidth: 0.7              // سُمك الخط
+          lineColor: [80, 80, 80],    // رمادي داكن ناعم
+          lineWidth: 0.3              // سماكة حدود أنعم
         },
         bodyStyles: {
           halign: 'center',
           valign: 'middle',
-          lineColor: [0, 0, 0],       // حدود خلايا الجسم سوداء
-          lineWidth: 0.7              // سُمك الخط
+          lineColor: [80, 80, 80],    // رمادي داكن ناعم
+          lineWidth: 0.3              // سماكة حدود أنعم
         },
         styles: {
           halign: 'center',
@@ -280,7 +280,7 @@
         didParseCell: function (data) {
           if (data.section === 'body') {
             if ((data.row.index + 1) % 2 === 0) {
-              data.cell.styles.fillColor = [191, 226, 240]; // #BFE2F0
+              data.cell.styles.fillColor = [230, 245, 255]; // أزرق فاتح جداً للبي دي إف
             } else {
               data.cell.styles.fillColor = [255, 255, 255]; // أبيض
             }
