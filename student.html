@@ -92,9 +92,12 @@
 
     th, td {
       border: 1px solid #ddd;
-      padding: 3px;
+      padding: 10px 20px;
       line-height: 1;
       text-align: center;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
 
     th {
@@ -102,19 +105,12 @@
       color: white;
     }
 
-    td {
-      background-color: #f9f9f9;
+    tbody tr:nth-child(odd) td {
+      background-color: white;
     }
 
-    tr:nth-child(even) td {
-      background-color: #e8f4ff;
-    }
-
-    th, td {
-      white-space: nowrap;
-      padding: 10px 20px;
-      text-overflow: ellipsis;
-      overflow: hidden;
+    tbody tr:nth-child(even) td {
+      background-color: #BFE2F0;
     }
 
     @media (max-width: 600px) {
