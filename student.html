@@ -189,7 +189,7 @@
       if (studentRecords.length > 0) {
         const studentName = studentRecords[0][1];
         const studentNumber = studentRecords[0][0];
-        document.getElementById('studentInfo').innerHTML = `<h2>Student Name: ${studentName}</h2><h2>Student ID: ${studentNumber}</h2>`;
+        document.getElementById('studentInfo').innerHTML = `<h2> ${studentName}</h2><h2> ${studentNumber}</h2>`;
 
         const studentTable = document.getElementById('studentTable');
         studentRecords.forEach(record => {
@@ -225,7 +225,7 @@
 
       doc.setFont('Amiri', 'normal');
       doc.setFontSize(18);
-      doc.text('Student Details', doc.internal.pageSize.width / 2, 25, null, null, 'center');
+      doc.text('Summer Midterm Exams’ Schedule 2025- Seating Places', doc.internal.pageSize.width / 2, 25, null, null, 'center');
 
       doc.setFontSize(12);
       const studentName = document.getElementById('studentInfo').children[0].textContent.split(":")[1].trim();
