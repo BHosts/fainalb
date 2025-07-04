@@ -235,8 +235,8 @@
        doc.text('Summer Midterm Exams’ Schedule 2025', doc.internal.pageSize.width / 2, 25, null, null, 'center');
        doc.text('- Seating Places -', doc.internal.pageSize.width / 2, 35, null, null, 'center');
 
-
-      doc.setFontSize(12);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
       const studentName = document.getElementById('studentInfo').children[0].textContent.split(":")[1].trim();
       const studentNumber = document.getElementById('studentInfo').children[1].textContent.split(":")[1].trim();
       doc.text(`Student Name: ${studentName}`, doc.internal.pageSize.width / 2, 50, null, null, 'center');
