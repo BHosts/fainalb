@@ -26,7 +26,7 @@
             position: relative;
             border-radius: 10px;
             margin: 20px auto;
-            overflow-x: auto; 
+            overflow-x: auto;
         }
 
         .header {
@@ -87,7 +87,7 @@
             max-width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            table-layout: auto; 
+            table-layout: auto;
         }
 
         th, td {
@@ -167,16 +167,19 @@
     <script>
         const allStudents = JSON.parse(localStorage.getItem('allStudents'));
         const studentID = localStorage.getItem('studentID');
+
         if (allStudents && studentID) {
             const studentRecords = allStudents.filter(record => record[0] === studentID);
             if (studentRecords.length > 0) {
                 const studentName = studentRecords[0][1];
                 const studentNumber = studentRecords[0][0];
                 document.getElementById('studentInfo').innerHTML = `<h2>Student Name: ${studentName}</h2><h2>Student ID: ${studentNumber}</h2>`;
+
                 const studentTable = document.getElementById('studentTable');
+
                 studentRecords.forEach(record => {
                     const row = document.createElement('tr');
-                    const wantedIndexes = [2, 3, 4, 5, 7, 8, 9]; // بدون Building (6) و Track (10)
+                    const wantedIndexes = [2, 3, 4, 5, 6, 7, 8, 9]; // مطابق لترتيب الإكسل
                     wantedIndexes.forEach(i => {
                         const cell = document.createElement('td');
                         cell.textContent = record[i] || 'N/A';
@@ -202,7 +205,6 @@
             const doc = new jsPDF();
 
             doc.setFont('Amiri', 'normal');
-            
             doc.setFontSize(18);
             doc.text('Student Details', doc.internal.pageSize.width / 2, 25, null, null, 'center');
 
@@ -221,7 +223,7 @@
             rows.forEach(row => {
                 const rowData = [];
                 const cells = row.querySelectorAll('td');
-                const selected = [0,1,2,3,4,5,6,7]; // حذف Building و Track
+                const selected = [0, 1, 2, 3, 4, 5, 6, 7]; // كل الأعمدة المعروضة
                 selected.forEach(index => {
                     rowData.push(cells[index]?.textContent.trim() || 'N/A');
                 });
@@ -236,7 +238,7 @@
                 headStyles: { 
                     halign: 'center', 
                     valign: 'middle', 
-                    fillColor: [74,144,226],
+                    fillColor: [74, 144, 226],
                     textColor: [255, 255, 255]
                 },
                 bodyStyles: { 
