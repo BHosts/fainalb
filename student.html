@@ -92,7 +92,7 @@
 
         th, td {
             border: 1px solid #ddd;
-            padding: 3px; 
+            padding: 3px;
             line-height: 1;
             text-align: center;
         }
@@ -110,14 +110,7 @@
             background-color: #e8f4ff;
         }
 
-        th {
-            white-space: nowrap;
-            padding: 10px 20px;
-            text-overflow: ellipsis;
-            overflow: hidden;
-        }
-
-        td:nth-child(4), th {
+        th, td {
             white-space: nowrap;
             padding: 10px 20px;
             text-overflow: ellipsis;
@@ -156,12 +149,10 @@
                         <th>Day</th>
                         <th>Date</th>
                         <th>Time</th>
-                        <th>Building</th>
                         <th>Room</th>
                         <th>SecId</th>
                         <th>Branch</th>
                         <th>Seat No</th>
-                        <th>Track</th>
                     </tr>
                 </thead>
                 <tbody id="studentTable"></tbody>
@@ -185,11 +176,12 @@
                 const studentTable = document.getElementById('studentTable');
                 studentRecords.forEach(record => {
                     const row = document.createElement('tr');
-                    for (let i = 2; i < record.length; i++) {
+                    const wantedIndexes = [2, 3, 4, 5, 7, 8, 9]; // بدون Building (6) و Track (10)
+                    wantedIndexes.forEach(i => {
                         const cell = document.createElement('td');
                         cell.textContent = record[i] || 'N/A';
                         row.appendChild(cell);
-                    }
+                    });
                     studentTable.appendChild(row);
                 });
             } else {
@@ -205,63 +197,62 @@
             window.location.href = 'index.html';
         }
 
-document.getElementById('savePdfButton').addEventListener('click', () => {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+        document.getElementById('savePdfButton').addEventListener('click', () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
 
-    doc.setFont('Amiri', 'normal');
-    
-    // Header
-    doc.setFontSize(18);
-    doc.text('Student Details', doc.internal.pageSize.width / 2, 25, null, null, 'center');
-    
-    // Student Info
-    doc.setFontSize(12);
-    const studentName = document.getElementById('studentInfo').children[0].textContent.split(":")[1].trim();
-    const studentNumber = document.getElementById('studentInfo').children[1].textContent.split(":")[1].trim();
-    doc.text(`Student Name: ${studentName}`, doc.internal.pageSize.width / 2, 50, null, null, 'center');
-    doc.text(`Student ID: ${studentNumber}`, doc.internal.pageSize.width / 2, 60, null, null, 'center');
-    
-    // Table
-    const headers = [
-        ["Course", "Day", "Date", "Time", "Building", "Room", "SecId", "Branch", "Seat No", "Track"]
-    ];
+            doc.setFont('Amiri', 'normal');
+            
+            doc.setFontSize(18);
+            doc.text('Student Details', doc.internal.pageSize.width / 2, 25, null, null, 'center');
 
-    const data = [];
-    const rows = document.querySelectorAll('#studentTable tr');
-    rows.forEach(row => {
-        const rowData = [];
-        row.querySelectorAll('td').forEach(cell => rowData.push(cell.textContent.trim()));
-        data.push(rowData);
-    });
+            doc.setFontSize(12);
+            const studentName = document.getElementById('studentInfo').children[0].textContent.split(":")[1].trim();
+            const studentNumber = document.getElementById('studentInfo').children[1].textContent.split(":")[1].trim();
+            doc.text(`Student Name: ${studentName}`, doc.internal.pageSize.width / 2, 50, null, null, 'center');
+            doc.text(`Student ID: ${studentNumber}`, doc.internal.pageSize.width / 2, 60, null, null, 'center');
 
-    doc.autoTable({
-        head: headers,
-        body: data,
-        startY: 70,
-        theme: 'grid',
-        headStyles: { 
-            halign: 'center', 
-            valign: 'middle', 
-            fillColor: [74,144,226],
-            textColor: [255, 255, 255]
-        },
-        bodyStyles: { 
-            halign: 'center', 
-            valign: 'middle' 
-        },
-        styles: {
-            halign: 'center',
-            valign: 'middle'
-        },
-        cellPadding: 5,
-        margin: { left: 10, right: 10 },
-    });
+            const headers = [
+                ["Course", "Day", "Date", "Time", "Room", "SecId", "Branch", "Seat No"]
+            ];
 
+            const data = [];
+            const rows = document.querySelectorAll('#studentTable tr');
+            rows.forEach(row => {
+                const rowData = [];
+                const cells = row.querySelectorAll('td');
+                const selected = [0,1,2,3,4,5,6,7]; // حذف Building و Track
+                selected.forEach(index => {
+                    rowData.push(cells[index]?.textContent.trim() || 'N/A');
+                });
+                data.push(rowData);
+            });
 
-    doc.save('Student_Details.pdf');
-});
+            doc.autoTable({
+                head: headers,
+                body: data,
+                startY: 70,
+                theme: 'grid',
+                headStyles: { 
+                    halign: 'center', 
+                    valign: 'middle', 
+                    fillColor: [74,144,226],
+                    textColor: [255, 255, 255]
+                },
+                bodyStyles: { 
+                    halign: 'center', 
+                    valign: 'middle' 
+                },
+                styles: {
+                    halign: 'center',
+                    valign: 'middle'
+                },
+                cellPadding: 5,
+                margin: { left: 10, right: 10 },
+            });
 
+            doc.save('Student_Details.pdf');
+        });
 
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
