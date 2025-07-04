@@ -226,9 +226,13 @@
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
 
-      doc.setFont('Amiri', 'normal');
-      doc.setFontSize(18);
-      doc.text('Summer Midterm Exams’ Schedule 2025- Seating Places', doc.internal.pageSize.width / 2, 25, null, null, 'center');
+      //doc.setFont('Amiri', 'normal');
+      //doc.setFontSize(18);
+      //doc.text('Summer Midterm Exams’ Schedule 2025- Seating Places', doc.internal.pageSize.width / 2, 25, null, null, 'center');
+      
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+      doc.text('Summer Midterm Exams’ Schedule 2025 - Seating Places', doc.internal.pageSize.width / 2, 25, null, null, 'center');
 
       doc.setFontSize(12);
       const studentName = document.getElementById('studentInfo').children[0].textContent.split(":")[1].trim();
