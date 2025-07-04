@@ -173,8 +173,8 @@
 
       // ✅ فرز حسب التاريخ من الأصغر إلى الأكبر (record[4] هو التاريخ)
       studentRecords.sort((a, b) => {
-        const dateA = new Date(a[4].replace(/(\d{1,2})\/(\d{1,2})\/(\d{4})/, '$2-$1-$3'));
-        const dateB = new Date(b[4].replace(/(\d{1,2})\/(\d{1,2})\/(\d{4})/, '$2-$1-$3'));
+        const dateA = new Date(a[4].replace(/(\d{1,2})\/(\d{1,2})\/(\d{4})/, '$2/$1/$3'));
+        const dateB = new Date(b[4].replace(/(\d{1,2})\/(\d{1,2})\/(\d{4})/, '$2/$1/$3'));
         return dateA - dateB;
       });
 
