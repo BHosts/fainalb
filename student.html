@@ -237,8 +237,9 @@
 
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(10);
-      const studentName = document.getElementById('studentInfo').children[0].textContent.split(":")[1].trim();
-      const studentNumber = document.getElementById('studentInfo').children[1].textContent.split(":")[1].trim();
+      const studentNumber = document.getElementById('studentInfo').children[0].textContent.split(":")[1].trim();
+      const studentName   = document.getElementById('studentInfo').children[1].textContent.split(":")[1].trim();
+      
       doc.text(`Student ID: ${studentNumber}`, doc.internal.pageSize.width / 2, 60, null, null, 'center');
       doc.text(`Student Name: ${studentName}`, doc.internal.pageSize.width / 2, 50, null, null, 'center');
 
